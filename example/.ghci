@@ -1,0 +1,1 @@
+:set -i../src -hide-all-packages -packagebase -packageHUnit -packagehspec
