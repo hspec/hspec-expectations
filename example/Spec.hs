@@ -11,13 +11,19 @@ main = hspecX spec
 spec :: Specs
 spec = do
 
-  describe "ShouldBe" $ do
+  describe "shouldBe" $ do
     it "this should succeed" $ do
       "foo" `shouldBe` "foo"
 
     it "this should fail" $ do
       "foo" `shouldBe` "bar"
 
+  describe "shouldSatisfy" $ do
+    it "this should succeed" $ do
+      "" `shouldSatisfy` null
+
+    it "this should fail" $ do
+      "foo" `shouldSatisfy` null
 
   describe "shouldThrow" $ do
     it "this should succeed" $ do

@@ -1,5 +1,6 @@
 module Test.HUnit.ShouldBe (
   shouldBe
+, shouldSatisfy
 , shouldThrow
 , Selector
 , anyException
@@ -22,6 +23,9 @@ infix 1 `shouldBe`, `shouldThrow`
 -- (this is just an alias for `@?=`).
 shouldBe :: (Show a, Eq a) => a -> a -> Assertion
 actual `shouldBe` expected = actual @?= expected
+
+shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Assertion
+v `shouldSatisfy` p = assertBool (show v ++ " did not satisfy predicate!") (p v)
 
 
 type Selector a = (a -> Bool)
