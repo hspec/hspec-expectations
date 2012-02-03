@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 module Spec (main, spec) where
 
 import           Test.Hspec.Monadic
@@ -6,8 +5,10 @@ import           Test.Hspec.HUnit ()
 import           Test.HUnit.ShouldBe
 import           Control.Exception
 
-main = hspec spec
+main :: IO ()
+main = hspecX spec
 
+spec :: Specs
 spec = do
 
   describe "ShouldBe" $ do
