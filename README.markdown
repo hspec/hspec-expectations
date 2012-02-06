@@ -11,8 +11,8 @@ integrates with HUnit, like
 
 ## An introductory example
 
-Here is an example, that uses this in combination with Hspec. It's a
-partial specification of itself.
+Here is an example that uses Hspec. It's a partial specification of
+itself.
 
     import Test.Hspec.Monadic
     import Test.Hspec.HUnit ()
