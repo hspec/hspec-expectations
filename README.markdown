@@ -3,13 +3,16 @@
 (inspired by [ScalaTest's ShouldMatchers](http://www.scalatest.org/))
 
 The three main primitives are `shouldBe`, `shouldSatisfy` and
-`shouldThrow`.
+`shouldThrow`. They can be used with
+[HUnit](http://hackage.haskell.org/package/HUnit), or any framework that
+integrates with HUnit, like
+[test-framewor](http://hackage.haskell.org/package/test-framework) or
+[Hspec](http://hackage.haskell.org/package/hspec).
 
 ## An introductory example
 
-An example, that uses this in combination with
-[hspec](http://hackage.haskell.org/package/hspec). It's a partial
-specification of `test-shoulbe` itself.
+Here is an example, that uses this in combination with Hspec. It's a
+partial specification of itself.
 
     import Test.Hspec.Monadic
     import Test.Hspec.HUnit ()
@@ -44,8 +47,7 @@ specification of `test-shoulbe` itself.
 
     "bar" `shouldSatisfy` (not . null)
 
-It is similar to HUnit's `assertBool`, but gives a useful error
-messages.
+It is similar to HUnit's `assertBool`, but gives a useful error message.
 
     >>> 23 `shouldSatisfy` (> 42)
     *** Exception: HUnitFailure "23 did not satisfy predicate!"

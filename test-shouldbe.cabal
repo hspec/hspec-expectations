@@ -1,37 +1,7 @@
 name:             test-shouldbe
 version:          0.1.0
-synopsis:         Catchy combinators for HUnit, inspired by ScalaTest's ShouldMatchers
-description:
-  .
-  The three main primitives are `shouldBe`, `shouldSatisfy` and `shouldThrow`.
-  They can be used with @HUnit@, or any framework that integrates with HUnit
-  (like @test-framewor@ or @hspec@).
-  .
-  Here is an example that uses @hspec@.
-  .
-  > import Test.Hspec.Monadic
-  > import Test.Hspec.HUnit ()
-  > import Test.HUnit.ShouldBe
-  > import Control.Exception
-  >
-  > main :: IO ()
-  > main = hspecX $ do
-  >
-  >   describe "shouldBe" $ do
-  >
-  >     it "asserts equality" $ do
-  >       "foo" `shouldBe` "foo"
-  >
-  >   describe "shouldSatisfy" $ do
-  >
-  >     it "asserts that a predicate holds" $ do
-  >       "bar" `shouldSatisfy` (not . null)
-  >
-  >   describe "shouldThrow" $ do
-  >
-  >     it "asserts that an exception is thrown" $ do
-  >       throw DivideByZero `shouldThrow` (== DivideByZero)
-  >
+synopsis:         Catchy combinators for HUnit
+description:      Catchy combinators for HUnit: <https://github.com/sol/test-shouldbe#readme>
 license:          MIT
 license-file:     LICENSE
 copyright:        (c) 2011, 2012 Simon Hengel

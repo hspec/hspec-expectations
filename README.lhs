@@ -3,13 +3,17 @@ Catchy combinators for HUnit
 (inspired by [ScalaTest's ShouldMatchers](http://www.scalatest.org/))
 
 The three main primitives are `shouldBe`, `shouldSatisfy` and `shouldThrow`.
+They can be used with [HUnit][hunit], or any
+framework that integrates with HUnit, like
+[test-framewor][test-framework] or
+[Hspec][hspec].
+
 
 An introductory example
 -----------------------
 
-An example, that uses this in combination with
-[hspec](http://hackage.haskell.org/package/hspec).  It's a partial
-specification of `test-shoulbe` itself.
+Here is an example, that uses this in combination with Hspec.  It's a partial
+specification of itself.
 
 \begin{code}
 import Test.Hspec.Monadic
@@ -48,7 +52,7 @@ shouldSatisfy
 
     "bar" `shouldSatisfy` (not . null)
 
-It is similar to HUnit's `assertBool`, but gives a useful error messages.
+It is similar to HUnit's `assertBool`, but gives a useful error message.
 
     >>> 23 `shouldSatisfy` (> 42)
     *** Exception: HUnitFailure "23 did not satisfy predicate!"
@@ -93,3 +97,7 @@ combinator corresponds to a constructor; it takes the same arguments, and has
 the same name (but starting with a lower-case letter).
 
     error "foobar" `shouldThrow` errorCall "foobar"
+
+[hunit]: http://hackage.haskell.org/package/HUnit
+[test-framework]: http://hackage.haskell.org/package/test-framework
+[hspec]: http://hackage.haskell.org/package/hspec
