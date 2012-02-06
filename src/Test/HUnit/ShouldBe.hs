@@ -1,13 +1,20 @@
 module Test.HUnit.ShouldBe (
+
+-- * Making assertions
   shouldBe
 , shouldSatisfy
+
+-- * Checking for exceptions
 , shouldThrow
+
+-- ** Selecting exceptions
 , Selector
 , anyException
 , anyErrorCall
 , errorCall
 , anyIOException
 , anyArithException
+
 ) where
 
 import           Prelude hiding (catch)
@@ -24,12 +31,17 @@ infix 1 `shouldBe`, `shouldThrow`
 shouldBe :: (Show a, Eq a) => a -> a -> Assertion
 actual `shouldBe` expected = actual @?= expected
 
+-- |
+-- @v \`shouldSatisfy\` p@ asserts that @p v@ is @True@.
 shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Assertion
 v `shouldSatisfy` p = assertBool (show v ++ " did not satisfy predicate!") (p v)
 
 
 type Selector a = (a -> Bool)
 
+-- |
+-- @action \`shouldThrow\` selector@ asserts that @action@ throws an exception.
+-- The precise nature of that exception is described with a 'Selector'.
 shouldThrow :: Exception e => IO a -> (e -> Bool) -> Assertion
 action `shouldThrow` p = do
   m <- (action >> return Nothing) `catch` (return . Just . (p &&& id))
