@@ -1,6 +1,6 @@
 name:             test-shouldbe
 version:          0.0.0
-synopsis:         Nice combinators for HUnit, inspired by ScalaTest's ShouldMatchers
+synopsis:         Catchy combinators for HUnit, inspired by ScalaTest's ShouldMatchers
 license:          MIT
 license-file:     LICENSE
 copyright:        (c) 2011, 2012 Simon Hengel

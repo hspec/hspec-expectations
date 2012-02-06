@@ -9,12 +9,25 @@ module Test.HUnit.ShouldBe (
 
 -- ** Selecting exceptions
 , Selector
+
+-- ** Predefined type-based selectors
+-- |
+-- There are predefined selectors for some standard exceptions.  Each selector
+-- is just @const True@ with an appropriate type.
 , anyException
 , anyErrorCall
-, errorCall
 , anyIOException
 , anyArithException
 
+-- ** Combinators for defining value-based selectors
+-- |
+-- Some exceptions (most prominently `ErrorCall`) have no `Eq` instance.
+-- Selecting a specific value would require pattern matching.
+--
+-- For such exceptions, combinators that construct selectors are provided.
+-- Each combinator corresponds to a constructor; it takes the same arguments,
+-- and has the same name (but starting with a lower-case letter).
+, errorCall
 ) where
 
 import           Prelude hiding (catch)
@@ -37,12 +50,15 @@ shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Assertion
 v `shouldSatisfy` p = assertBool (show v ++ " did not satisfy predicate!") (p v)
 
 
+-- |
+-- A @Selector@ is a predicate; it can simultaneously constrain the type and
+-- value of an exception.
 type Selector a = (a -> Bool)
 
 -- |
 -- @action \`shouldThrow\` selector@ asserts that @action@ throws an exception.
 -- The precise nature of that exception is described with a 'Selector'.
-shouldThrow :: Exception e => IO a -> (e -> Bool) -> Assertion
+shouldThrow :: Exception e => IO a -> Selector e -> Assertion
 action `shouldThrow` p = do
   m <- (action >> return Nothing) `catch` (return . Just . (p &&& id))
   case m of
