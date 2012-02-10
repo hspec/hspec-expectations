@@ -3,9 +3,11 @@
 -- they turn out to be useful for a wider audience.
 module Test.HUnit.ShouldBe.Contrib (
 
+  module Test.HUnit.ShouldBe
+
 -- * Predicates
 -- | (useful in combination with `shouldSatisfy`)
-  isLeft
+, isLeft
 , isRight
 ) where
 
