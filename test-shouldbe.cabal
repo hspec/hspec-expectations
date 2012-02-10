@@ -25,3 +25,4 @@ library
       src
   exposed-modules:
       Test.HUnit.ShouldBe
+    , Test.HUnit.ShouldBe.Contrib
