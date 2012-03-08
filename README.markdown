@@ -6,7 +6,7 @@ The three main primitives are `shouldBe`, `shouldSatisfy` and
 `shouldThrow`. They can be used with
 [HUnit](http://hackage.haskell.org/package/HUnit), or any framework that
 integrates with HUnit, like
-[test-framewor](http://hackage.haskell.org/package/test-framework) or
+[test-framework](http://hackage.haskell.org/package/test-framework) or
 [Hspec](http://hackage.haskell.org/package/hspec).
 
 ## An introductory example
