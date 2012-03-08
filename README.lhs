@@ -5,7 +5,7 @@ Catchy combinators for HUnit
 The three main primitives are `shouldBe`, `shouldSatisfy` and `shouldThrow`.
 They can be used with [HUnit][hunit], or any
 framework that integrates with HUnit, like
-[test-framewor][test-framework] or
+[test-framework][test-framework] or
 [Hspec][hspec].
 
 
