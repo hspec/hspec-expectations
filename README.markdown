@@ -14,28 +14,30 @@ integrates with HUnit, like
 Here is an example that uses Hspec. It's a partial specification of
 itself.
 
-    import Test.Hspec.Monadic
-    import Test.Hspec.HUnit ()
-    import Test.HUnit.ShouldBe
-    import Control.Exception
+```haskell
+import Test.Hspec.Monadic
+import Test.Hspec.HUnit ()
+import Test.HUnit.ShouldBe
+import Control.Exception
 
-    main :: IO ()
-    main = hspecX $ do
+main :: IO ()
+main = hspecX $ do
 
-      describe "shouldBe" $ do
+  describe "shouldBe" $ do
 
-        it "asserts equality" $ do
-          "foo" `shouldBe` "foo"
+    it "asserts equality" $ do
+      "foo" `shouldBe` "foo"
 
-      describe "shouldSatisfy" $ do
+  describe "shouldSatisfy" $ do
 
-        it "asserts that a predicate holds" $ do
-          "bar" `shouldSatisfy` (not . null)
+    it "asserts that a predicate holds" $ do
+      "bar" `shouldSatisfy` (not . null)
 
-      describe "shouldThrow" $ do
+  describe "shouldThrow" $ do
 
-        it "asserts that an exception is thrown" $ do
-          throw DivideByZero `shouldThrow` (== DivideByZero)
+    it "asserts that an exception is thrown" $ do
+      throw DivideByZero `shouldThrow` (== DivideByZero)
+```
 
 ## shouldBe
 
