@@ -5,6 +5,7 @@ module Test.HUnit.ShouldBe (
 -- * Making assertions
   shouldBe
 , shouldSatisfy
+, shouldReturn
 
 -- * Checking for exceptions
 , shouldThrow
@@ -51,6 +52,10 @@ actual `shouldBe` expected = actual @?= expected
 shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Assertion
 v `shouldSatisfy` p = assertBool (show v ++ " did not satisfy predicate!") (p v)
 
+-- |
+-- @action \`shouldReturn\` expected@ asserts that @action@ returns @expected@.
+shouldReturn :: (Show a, Eq a) => IO a -> a -> Assertion
+action `shouldReturn` expected = action >>= (`shouldBe` expected)
 
 -- |
 -- A @Selector@ is a predicate; it can simultaneously constrain the type and

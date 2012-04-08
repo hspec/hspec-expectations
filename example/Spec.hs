@@ -25,6 +25,13 @@ spec = do
     it "this should fail" $ do
       "foo" `shouldSatisfy` null
 
+  describe "shouldReturn" $ do
+    it "this should succeed" $ do
+      return "foo" `shouldReturn` "foo"
+
+    it "this should fail" $ do
+      return "foo" `shouldReturn` "bar"
+
   describe "shouldThrow" $ do
     it "this should succeed" $ do
       throw DivideByZero `shouldThrow` (== DivideByZero)

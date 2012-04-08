@@ -54,6 +54,14 @@ It is similar to HUnit's `assertBool`, but gives a useful error message.
     >>> 23 `shouldSatisfy` (> 42)
     *** Exception: HUnitFailure "23 did not satisfy predicate!"
 
+## shouldReturn
+
+`shouldReturn` asserts that an action returns a given value.
+
+```haskell
+return "bar" `shouldReturn` "bar"
+```
+
 ## shouldThrow
 
 `shouldThrow` asserts that an exception is thrown. The precise nature of
