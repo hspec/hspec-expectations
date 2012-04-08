@@ -39,7 +39,7 @@ import           Control.Exception
 import           Data.Typeable
 import           Control.Arrow ((&&&))
 
-infix 1 `shouldBe`, `shouldSatisfy`, `shouldThrow`
+infix 1 `shouldBe`, `shouldSatisfy`, `shouldReturn`, `shouldThrow`
 
 -- |
 -- @actual \`shouldBe\` expected@ asserts that @actual@ is equal to @expected@
