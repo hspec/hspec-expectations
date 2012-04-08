@@ -47,7 +47,9 @@ main = hspecX $ do
 
 `shouldSatisfy` asserts that some predicate holds for a given value.
 
-    "bar" `shouldSatisfy` (not . null)
+```haskell
+"bar" `shouldSatisfy` (not . null)
+```
 
 It is similar to HUnit's `assertBool`, but gives a useful error message.
 
@@ -67,33 +69,45 @@ return "bar" `shouldReturn` "bar"
 `shouldThrow` asserts that an exception is thrown. The precise nature of
 that exception is described with a `Selector`.
 
-    error "foobar" `shouldThrow` anyException
+```haskell
+error "foobar" `shouldThrow` anyException
+```
 
 A `Selector` is a predicate, it can simultaneously constrain the type
 and value of an exception.
 
-    throw DivideByZero `shouldThrow` (== DivideByZero)
+```haskell
+throw DivideByZero `shouldThrow` (== DivideByZero)
+```
 
 To select all exceptions of a given type, `const True` can be used.
 
-    error "foobar" `shouldThrow` (const True :: Selector ErrorCall)
+```haskell
+error "foobar" `shouldThrow` (const True :: Selector ErrorCall)
+```
 
 For convenience, predefined selectors for some standard exceptions are
 provided.
 
-    error "foobar" `shouldThrow` anyErrorCall
+```haskell
+error "foobar" `shouldThrow` anyErrorCall
+```
 
 Some exceptions (like `ErrorCall`) have no `Eq` instance, so checking
 for a specific value requires pattern matching.
 
-    error "foobar" `shouldThrow` (\e -> case e of
-        ErrorCall "foobar" -> True
-        _ -> False
-        )
+```haskell
+error "foobar" `shouldThrow` (\e -> case e of
+    ErrorCall "foobar" -> True
+    _ -> False
+    )
+```
 
 For such exceptions, combinators that construct selectors are provided.
 Each combinator corresponds to a constructor; it takes the same
 arguments, and has the same name (but starting with a lower-case
 letter).
 
-    error "foobar" `shouldThrow` errorCall "foobar"
+```haskell
+error "foobar" `shouldThrow` errorCall "foobar"
+```
