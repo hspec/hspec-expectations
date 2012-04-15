@@ -10,6 +10,7 @@ maintainer:       Simon Hengel <sol@typeful.net>
 build-type:       Simple
 category:         Testing
 cabal-version:    >= 1.6
+homepage:         https://github.com/sol/test-shouldbe#readme
 
 source-repository head
   type: git
