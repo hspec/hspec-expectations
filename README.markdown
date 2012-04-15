@@ -14,7 +14,7 @@ integrates with HUnit, like
 Here is an example that uses Hspec. It's a partial specification of
 itself.
 
-```haskell
+~~~ {.haskell .literate}
 import Test.Hspec.Monadic
 import Test.Hspec.HUnit ()
 import Test.HUnit.ShouldBe
@@ -37,7 +37,7 @@ main = hspecX $ do
 
     it "asserts that an exception is thrown" $ do
       throw DivideByZero `shouldThrow` (== DivideByZero)
-```
+~~~
 
 ## shouldBe
 
