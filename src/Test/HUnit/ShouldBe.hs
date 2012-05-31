@@ -67,12 +67,12 @@ type Selector a = (a -> Bool)
 -- The precise nature of that exception is described with a 'Selector'.
 shouldThrow :: Exception e => IO a -> Selector e -> Assertion
 action `shouldThrow` p = do
-  m <- (action >> return Nothing) `catch` (return . Just . (p &&& id))
-  case m of
-    Nothing ->
+  r <- try action
+  case r of
+    Right _ ->
       assertFailure msgNothing
-    Just (r, e) ->
-      assertBool (msgFailure e) r
+    Left e ->
+      assertBool (msgFailure e) (p e)
   where
     msgNothing = "did not get expected exception: "
             ++ (show . typeOf . instanceOf $ p)
