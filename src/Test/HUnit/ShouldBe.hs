@@ -70,18 +70,17 @@ action `shouldThrow` p = do
   r <- try action
   case r of
     Right _ ->
-      assertFailure msgNothing
+      assertFailure $
+        "did not get expected exception: " ++ exceptionType
     Left e ->
-      assertBool (msgFailure e) (p e)
+      (`assertBool` p e) $
+        "predicate failed on expected exception: " ++ exceptionType ++ " (" ++ show e ++ ")"
   where
-    msgNothing = "did not get expected exception: "
-            ++ (show . typeOf . instanceOf $ p)
-
-    msgFailure e = "predicate failed on expected exception: "
-            ++ (show . typeOf $ e) ++ " (" ++ show e ++ ")"
-
-    instanceOf :: Selector a -> a
-    instanceOf _ = error "Test.HUnit.ShouldBe.shouldThrow: brocken Typeable instance"
+    -- a string repsentation of the expected exception's type
+    exceptionType = (show . typeOf . instanceOf) p
+      where
+        instanceOf :: Selector a -> a
+        instanceOf _ = error "Test.HUnit.ShouldBe.shouldThrow: brocken Typeable instance"
 
 anyException :: Selector SomeException
 anyException = const True
