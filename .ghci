@@ -1,1 +1,1 @@
-:set -pgmL pandoc-unlit
+:set -isrc -itest -idist/build/autogen -pgmL pandoc-unlit
