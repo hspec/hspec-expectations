@@ -1,10 +1,13 @@
 module Test.HUnit.ShouldBeSpec (main, spec) where
 
-import           Test.Hspec.ShouldBe
+import           Test.Hspec.HUnit()
+import           Test.Hspec.Monadic
 import           Test.HUnit
 import           Control.Exception
 import           System.IO.Silently
 import           System.IO
+
+import           Test.HUnit.ShouldBe
 
 main :: IO ()
 main = hspecX spec
