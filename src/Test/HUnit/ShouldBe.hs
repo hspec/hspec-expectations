@@ -37,7 +37,6 @@ import           Prelude hiding (catch)
 import           Test.HUnit
 import           Control.Exception
 import           Data.Typeable
-import           Control.Arrow ((&&&))
 
 infix 1 `shouldBe`, `shouldSatisfy`, `shouldReturn`, `shouldThrow`
 

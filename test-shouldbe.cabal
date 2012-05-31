@@ -27,3 +27,18 @@ library
   exposed-modules:
       Test.HUnit.ShouldBe
     , Test.HUnit.ShouldBe.Contrib
+
+test-suite spec
+  main-is:
+      Spec.hs
+  type:
+      exitcode-stdio-1.0
+  ghc-options:
+      -Wall -Werror
+  hs-source-dirs:
+      src, test
+  build-depends:
+      base        >= 4.0  && < 4.6
+    , silently
+    , hspec
+    , hspec-discover
