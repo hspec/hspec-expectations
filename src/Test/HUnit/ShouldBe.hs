@@ -2,13 +2,13 @@
 -- Introductory documentation: <https://github.com/sol/test-shouldbe#readme>
 module Test.HUnit.ShouldBe (
 
--- * Making assertions
+-- * Setting expectations
   Expectation
 , shouldBe
 , shouldSatisfy
 , shouldReturn
 
--- * Checking for exceptions
+-- * Expecting exceptions
 , shouldThrow
 
 -- ** Selecting exceptions
@@ -44,18 +44,19 @@ type Expectation = Assertion
 infix 1 `shouldBe`, `shouldSatisfy`, `shouldReturn`, `shouldThrow`
 
 -- |
--- @actual \`shouldBe\` expected@ asserts that @actual@ is equal to @expected@
--- (this is just an alias for `@?=`).
+-- @actual \`shouldBe\` expected@ sets the expectation that @actual@ is equal
+-- to @expected@ (this is just an alias for `@?=`).
 shouldBe :: (Show a, Eq a) => a -> a -> Expectation
 actual `shouldBe` expected = actual @?= expected
 
 -- |
--- @v \`shouldSatisfy\` p@ asserts that @p v@ is @True@.
+-- @v \`shouldSatisfy\` p@ sets the expectation that @p v@ is @True@.
 shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Expectation
 v `shouldSatisfy` p = assertBool (show v ++ " did not satisfy predicate!") (p v)
 
 -- |
--- @action \`shouldReturn\` expected@ asserts that @action@ returns @expected@.
+-- @action \`shouldReturn\` expected@ sets the expectation that @action@
+-- returns @expected@.
 shouldReturn :: (Show a, Eq a) => IO a -> a -> Expectation
 action `shouldReturn` expected = action >>= (`shouldBe` expected)
 
@@ -65,8 +66,9 @@ action `shouldReturn` expected = action >>= (`shouldBe` expected)
 type Selector a = (a -> Bool)
 
 -- |
--- @action \`shouldThrow\` selector@ asserts that @action@ throws an exception.
--- The precise nature of that exception is described with a 'Selector'.
+-- @action \`shouldThrow\` selector@ sets the expectation that @action@ throws
+-- an exception.  The precise nature of the expected exception is described
+-- with a 'Selector'.
 shouldThrow :: Exception e => IO a -> Selector e -> Expectation
 action `shouldThrow` p = do
   r <- try action
