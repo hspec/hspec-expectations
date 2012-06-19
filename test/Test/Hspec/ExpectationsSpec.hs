@@ -1,4 +1,4 @@
-module Test.HUnit.ShouldBeSpec (main, spec) where
+module Test.Hspec.ExpectationsSpec (main, spec) where
 
 import           Test.Hspec.HUnit()
 import           Test.Hspec.Monadic
@@ -7,10 +7,10 @@ import           Control.Exception
 import           System.IO.Silently
 import           System.IO
 
-import           Test.HUnit.ShouldBe
+import           Test.Hspec.Expectations
 
 main :: IO ()
-main = hspecX spec
+main = hspec spec
 
 shouldResultIn :: Assertion -> String -> IO ()
 shouldResultIn expectation result = do

@@ -17,11 +17,11 @@ itself.
 ~~~ {.haskell .literate}
 import Test.Hspec.Monadic
 import Test.Hspec.HUnit ()
-import Test.HUnit.ShouldBe
+import Test.Hspec.Expectations
 import Control.Exception
 
 main :: IO ()
-main = hspecX $ do
+main = hspec $ do
 
   describe "shouldBe" $ do
 

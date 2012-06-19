@@ -1,6 +1,6 @@
 -- |
 -- Introductory documentation: <https://github.com/sol/test-shouldbe#readme>
-module Test.HUnit.ShouldBe (
+module Test.Hspec.Expectations (
 
 -- * Setting expectations
   Expectation

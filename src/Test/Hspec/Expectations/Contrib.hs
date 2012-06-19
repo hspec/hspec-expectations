@@ -1,9 +1,9 @@
 -- |
 -- Experimental combinators, that may become part of the main distribution, if
 -- they turn out to be useful for a wider audience.
-module Test.HUnit.ShouldBe.Contrib (
+module Test.Hspec.Expectations.Contrib (
 
-  module Test.HUnit.ShouldBe
+  module Test.Hspec.Expectations
 
 -- * Predicates
 -- | (useful in combination with `shouldSatisfy`)
@@ -11,7 +11,7 @@ module Test.HUnit.ShouldBe.Contrib (
 , isRight
 ) where
 
-import Test.HUnit.ShouldBe
+import Test.Hspec.Expectations
 
 isLeft :: Either a b -> Bool
 isLeft (Left  _) = True
