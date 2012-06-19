@@ -9,7 +9,7 @@ author:           Simon Hengel <sol@typeful.net>
 maintainer:       Simon Hengel <sol@typeful.net>
 build-type:       Simple
 category:         Testing
-cabal-version:    >= 1.6
+cabal-version:    >= 1.8
 homepage:         https://github.com/sol/test-shouldbe#readme
 
 source-repository head
