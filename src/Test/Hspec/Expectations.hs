@@ -1,5 +1,5 @@
 -- |
--- Introductory documentation: <https://github.com/sol/test-shouldbe#readme>
+-- Introductory documentation: <https://github.com/sol/hspec-expectations#readme>
 module Test.Hspec.Expectations (
 
 -- * Setting expectations
