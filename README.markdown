@@ -34,7 +34,7 @@ main = hspec $ do
   describe "shouldThrow" $ do
 
     it "asserts that an exception is thrown" $ do
-      throw DivideByZero `shouldThrow` (== DivideByZero)
+      evaluate (1 `div` 0 :: Int) `shouldThrow` (== DivideByZero)
 ~~~
 
 ## shouldBe
