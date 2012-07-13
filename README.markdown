@@ -15,9 +15,7 @@ Here is an example that uses Hspec. It's a partial specification of
 itself.
 
 ~~~ {.haskell .literate}
-import Test.Hspec.Monadic
-import Test.Hspec.HUnit ()
-import Test.Hspec.Expectations
+import Test.Hspec
 import Control.Exception
 
 main :: IO ()
