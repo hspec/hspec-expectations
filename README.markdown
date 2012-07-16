@@ -59,7 +59,7 @@ It is similar to HUnit's `assertBool`, but gives a useful error message.
 `shouldReturn` asserts that an action returns a given value.
 
 ~~~ {.haskell}
-return "bar" `shouldReturn` "bar"
+launchMissiles `shouldReturn` Left "permission error"
 ~~~
 
 ## shouldThrow
