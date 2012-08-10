@@ -1,4 +1,6 @@
 language: haskell
 
-before_install:
+install:
+    - cabal install hspec
     - git clone https://github.com/sol/pandoc-unlit && cd pandoc-unlit && cabal install && cd ..
+    - cabal configure --enable-tests && cabal build
