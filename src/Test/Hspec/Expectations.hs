@@ -34,7 +34,7 @@ module Test.Hspec.Expectations (
 , errorCall
 ) where
 
-import           Prelude hiding (catch)
+import           Prelude
 import           Test.HUnit
 import           Control.Exception
 import           Data.Typeable

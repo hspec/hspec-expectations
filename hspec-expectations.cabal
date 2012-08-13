@@ -20,7 +20,7 @@ library
   ghc-options:
       -Wall
   build-depends:
-      base < 4.6
+      base < 4.7
     , HUnit
   hs-source-dirs:
       src
@@ -39,7 +39,7 @@ test-suite spec
       src
     , test
   build-depends:
-      base        >= 4.0  && < 4.6
+      base
     , HUnit
     , silently
     , hspec       >= 1.3
