@@ -48,9 +48,10 @@ test-suite readme
   type:
       exitcode-stdio-1.0
   ghc-options:
-      -Wall -Werror -pgmL pandoc-unlit
+      -Wall -Werror -pgmL markdown-unlit -optL haskell+literate
   main-is:
       README.lhs
   build-depends:
       base
     , hspec       >= 1.3
+    , markdown-unlit
