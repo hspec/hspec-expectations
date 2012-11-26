@@ -1,11 +1,11 @@
 module Test.Hspec.ExpectationsSpec (main, spec) where
 
 import           Test.Hspec.HUnit()
-import           Test.Hspec.Monadic
+import           Test.Hspec (Spec, describe, it)
+import           Test.Hspec.Runner
 import           Test.HUnit
 import           Control.Exception
 import           System.IO.Silently
-import           System.IO
 
 import           Test.Hspec.Expectations
 
@@ -14,7 +14,7 @@ main = hspec spec
 
 shouldResultIn :: Assertion -> String -> IO ()
 shouldResultIn expectation result = do
-  r <- fmap (last . lines . fst) . capture . hHspec stdout $ do
+  r <- fmap (last . lines) . capture_ . hspecWith defaultConfig $ do
     it "" expectation
   r @?= result
 
@@ -28,7 +28,7 @@ spec :: Spec
 spec = do
   describe "shouldBe" $ do
     it "succeeds, when used with two values that are equal" $ do
-      shouldHold $ 
+      shouldHold $
         "foo" `shouldBe` "foo"
 
     it "fails, when used with two values that are no equal" $ do
