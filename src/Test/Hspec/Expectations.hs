@@ -35,7 +35,7 @@ module Test.Hspec.Expectations (
 ) where
 
 import           Prelude
-import           Test.HUnit
+import           Test.HUnit (Assertion, (@?=), assertBool, assertFailure)
 import           Control.Exception
 import           Data.Typeable
 
