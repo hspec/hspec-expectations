@@ -52,7 +52,7 @@ actual `shouldBe` expected = actual @?= expected
 -- |
 -- @v \`shouldSatisfy\` p@ sets the expectation that @p v@ is @True@.
 shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Expectation
-v `shouldSatisfy` p = assertBool (show v ++ " did not satisfy predicate!") (p v)
+v `shouldSatisfy` p = assertBool ("predicate failed on: " ++ show v) (p v)
 
 -- |
 -- @action \`shouldReturn\` expected@ sets the expectation that @action@
