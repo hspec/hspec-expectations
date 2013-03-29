@@ -27,29 +27,29 @@ shouldNotHold = (`shouldResultIn` "1 example, 1 failure")
 spec :: Spec
 spec = do
   describe "shouldBe" $ do
-    it "succeeds, when used with two values that are equal" $ do
+    it "succeeds if arguments are equal" $ do
       shouldHold $
         "foo" `shouldBe` "foo"
 
-    it "fails, when used with two values that are no equal" $ do
+    it "fails if arguments are not equal" $ do
       shouldNotHold $
         "foo" `shouldBe` "bar"
 
   describe "shouldSatisfy" $ do
-    it "succeeds, when used with a predicate, and a value that satisfies the predicate" $ do
+    it "succeeds if value satisfies predicate" $ do
       shouldHold $
         "" `shouldSatisfy` null
 
-    it "fails, when used with a predicate, and a value that does not satisfy the predicate" $ do
+    it "fails if value does not satisfy predicate" $ do
       shouldNotHold $
         "foo" `shouldSatisfy` null
 
   describe "shouldReturn" $ do
-    it "succeeds, when used with a value and an action that returns that value" $ do
+    it "succeeds if arguments represent equal values" $ do
       shouldHold $
         return "foo" `shouldReturn` "foo"
 
-    it "fails, when used with a value and an action that returns a different value" $ do
+    it "fails if arguments do not represent equal values" $ do
       shouldNotHold $
         return "foo" `shouldReturn` "bar"
 
