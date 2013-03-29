@@ -4,6 +4,7 @@ module Test.Hspec.Expectations (
 
 -- * Setting expectations
   Expectation
+, expectationFailure
 , shouldBe
 , shouldSatisfy
 , shouldReturn
@@ -41,6 +42,10 @@ import           Data.Typeable
 
 type Expectation = Assertion
 
+-- | This is just an alias for HUnit's `assertFailure`.
+expectationFailure :: String -> Expectation
+expectationFailure = assertFailure
+
 infix 1 `shouldBe`, `shouldSatisfy`, `shouldReturn`, `shouldThrow`
 
 -- |
@@ -74,7 +79,7 @@ action `shouldThrow` p = do
   r <- try action
   case r of
     Right _ ->
-      assertFailure $
+      expectationFailure $
         "did not get expected exception: " ++ exceptionType
     Left e ->
       (`assertBool` p e) $
