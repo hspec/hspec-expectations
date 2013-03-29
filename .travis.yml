@@ -1,6 +1,1 @@
 language: haskell
-
-install:
-    - cabal install hspec
-    - cabal install markdown-unlit
-    - cabal configure --enable-tests && cabal build
