@@ -4,7 +4,7 @@ synopsis:         Catchy combinators for HUnit
 description:      Catchy combinators for HUnit: <https://github.com/sol/hspec-expectations#readme>
 license:          MIT
 license-file:     LICENSE
-copyright:        (c) 2011, 2012 Simon Hengel
+copyright:        (c) 2011-2013 Simon Hengel
 author:           Simon Hengel <sol@typeful.net>
 maintainer:       Simon Hengel <sol@typeful.net>
 build-type:       Simple
