@@ -1,5 +1,5 @@
 name:             hspec-expectations
-version:          0.3.0.3
+version:          0.3.1
 synopsis:         Catchy combinators for HUnit
 description:      Catchy combinators for HUnit: <https://github.com/sol/hspec-expectations#readme>
 license:          MIT
