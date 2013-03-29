@@ -20,7 +20,7 @@ library
   ghc-options:
       -Wall
   build-depends:
-      base < 4.7
+      base < 4.8
     , HUnit
   hs-source-dirs:
       src
