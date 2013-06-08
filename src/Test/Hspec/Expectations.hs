@@ -89,7 +89,7 @@ action `shouldThrow` p = do
     exceptionType = (show . typeOf . instanceOf) p
       where
         instanceOf :: Selector a -> a
-        instanceOf _ = error "Test.Hspec.Expectations.shouldThrow: brocken Typeable instance"
+        instanceOf _ = error "Test.Hspec.Expectations.shouldThrow: broken Typeable instance"
 
 anyException :: Selector SomeException
 anyException = const True
