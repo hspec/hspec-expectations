@@ -2,6 +2,5 @@ language: haskell
 
 # we need to do this explicitly because hspec depends on hspec-expectations...
 install:
-    - cabal install hspec
-    - cabal install markdown-unlit
+    - cabal install hspec markdown-unlit silently
     - cabal configure --enable-tests && cabal build
