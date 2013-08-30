@@ -7,6 +7,7 @@ module Test.Hspec.Expectations (
 , expectationFailure
 , shouldBe
 , shouldSatisfy
+, shouldContain
 , shouldReturn
 
 -- * Expecting exceptions
@@ -39,6 +40,7 @@ import           Prelude
 import           Test.HUnit (Assertion, (@?=), assertBool, assertFailure)
 import           Control.Exception
 import           Data.Typeable
+import           Data.List (isInfixOf)
 
 type Expectation = Assertion
 
@@ -58,6 +60,14 @@ actual `shouldBe` expected = actual @?= expected
 -- @v \`shouldSatisfy\` p@ sets the expectation that @p v@ is @True@.
 shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Expectation
 v `shouldSatisfy` p = assertBool ("predicate failed on: " ++ show v) (p v)
+
+-- |
+-- @list \`shouldContain\` sublist@ sets the expectation that @sublist@ is contained,
+-- wholly and intact, anywhere in the second.
+shouldContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
+list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
+  where
+    errorMsg = show list ++ " doesn't contain " ++ show sublist
 
 -- |
 -- @action \`shouldReturn\` expected@ sets the expectation that @action@
