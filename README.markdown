@@ -20,19 +20,15 @@ import Control.Exception
 
 main :: IO ()
 main = hspec $ do
-
   describe "shouldBe" $ do
-
     it "asserts equality" $ do
       "foo" `shouldBe` "foo"
 
   describe "shouldSatisfy" $ do
-
     it "asserts that a predicate holds" $ do
       "bar" `shouldSatisfy` (not . null)
 
   describe "shouldThrow" $ do
-
     it "asserts that an exception is thrown" $ do
       evaluate (1 `div` 0 :: Int) `shouldThrow` (== DivideByZero)
 ~~~
