@@ -48,7 +48,7 @@ type Expectation = Assertion
 expectationFailure :: String -> Expectation
 expectationFailure = assertFailure
 
-infix 1 `shouldBe`, `shouldSatisfy`, `shouldContain`, `shouldReturn`, `shouldThrow`
+infix 1 `shouldBe`, `shouldSatisfy`, `shouldContain`, `shouldPermute`, `shouldReturn`, `shouldThrow`
 
 -- |
 -- @actual \`shouldBe\` expected@ sets the expectation that @actual@ is equal
