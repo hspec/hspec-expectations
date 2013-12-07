@@ -43,6 +43,7 @@ test-suite spec
   build-depends:
       base
     , HUnit
+    , transformers
     , silently
     , hspec       >= 1.3
 
