@@ -8,6 +8,7 @@ module Test.Hspec.Expectations (
 , shouldBe
 , shouldSatisfy
 , shouldContain
+, shouldPermute
 , shouldReturn
 
 -- * Expecting exceptions
@@ -39,7 +40,7 @@ module Test.Hspec.Expectations (
 import           Test.HUnit (Assertion, (@?=), assertBool, assertFailure)
 import           Control.Exception
 import           Data.Typeable
-import           Data.List (isInfixOf)
+import           Data.List ((\\), isInfixOf)
 
 type Expectation = Assertion
 
@@ -47,7 +48,7 @@ type Expectation = Assertion
 expectationFailure :: String -> Expectation
 expectationFailure = assertFailure
 
-infix 1 `shouldBe`, `shouldSatisfy`, `shouldReturn`, `shouldThrow`
+infix 1 `shouldBe`, `shouldSatisfy`, `shouldReturn`, `shouldThrow`, `shouldPermute`
 
 -- |
 -- @actual \`shouldBe\` expected@ sets the expectation that @actual@ is equal
@@ -67,6 +68,14 @@ shouldContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
 list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
   where
     errorMsg = show list ++ " doesn't contain " ++ show sublist
+
+-- |
+-- @xs \`shouldPermute\` ys@ sets the expectation that @xs@ has the same
+-- elements that @ys@ has, possibly in another order
+shouldPermute :: (Show a, Eq a) => [a] -> [a] -> Expectation
+xs `shouldPermute` ys = assertBool errorMsg (all null [xs \\ ys, ys \\ xs])
+  where
+    errorMsg = show ys ++ " is not a permutation of " ++ show xs
 
 -- |
 -- @action \`shouldReturn\` expected@ sets the expectation that @action@

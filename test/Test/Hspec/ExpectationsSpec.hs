@@ -53,12 +53,12 @@ spec = do
     it "fails if arguments do not represent equal values" $ do
       shouldNotHold $
         return "foo" `shouldReturn` "bar"
-        
+
   describe "shouldContain" $ do
     it "succeeds if second argument is contained in the first" $ do
       shouldHold $
         "I'm an hello world message" `shouldContain` "an hello"
-        
+
     it "succeds not only with strings" $ do
       shouldHold $
         ([1,2,3,4,5] :: [Int]) `shouldContain` ([3,4] :: [Int])
@@ -66,6 +66,19 @@ spec = do
     it "fails if first argument doesn't contain the second" $ do
       shouldNotHold $
         "foo" `shouldContain` "bar"
+
+  describe "shouldPermute" $ do
+    it "succeeds if arguments are empty lists" $ do
+      shouldHold $
+        [] `shouldPermute` ([] :: [Int])
+
+    it "succeeds if arguments are equal up to permutation" $ do
+      shouldHold $
+        [1,2,2,3] `shouldPermute` [3,2,1,2]
+
+    it "fails if arguments are not equal up to permutation" $ do
+      shouldNotHold $
+        [1,2,2,3] `shouldPermute` [1,2,3]
 
   describe "shouldThrow" $ do
     it "can be used to require a specific exception" $ do
