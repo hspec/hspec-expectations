@@ -41,6 +41,8 @@ import           Control.Monad.IO.Class
 import           Test.Hspec.Expectations hiding (expectationFailure, shouldBe, shouldSatisfy, shouldContain, shouldReturn, shouldThrow)
 import qualified Test.Hspec.Expectations as E
 
+infix 1 `shouldBe`, `shouldSatisfy`, `shouldContain`, `shouldReturn`, `shouldThrow`
+
 liftIO2 :: MonadIO m => (a -> b -> IO r) -> a -> b -> m r
 liftIO2 action a = liftIO . action a
 
