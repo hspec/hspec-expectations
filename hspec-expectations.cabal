@@ -22,10 +22,12 @@ library
   build-depends:
       base < 4.8
     , HUnit
+    , transformers
   hs-source-dirs:
       src
   exposed-modules:
       Test.Hspec.Expectations
+    , Test.Hspec.Expectations.Lifted
     , Test.Hspec.Expectations.Contrib
 
 test-suite spec
