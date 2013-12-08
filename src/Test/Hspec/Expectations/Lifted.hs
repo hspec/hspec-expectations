@@ -70,8 +70,8 @@ shouldContain = liftIO2 E.shouldContain
 -- |
 -- @action \`shouldReturn\` expected@ sets the expectation that @action@
 -- returns @expected@.
-shouldReturn :: (Show a, Eq a, MonadIO m) => IO a -> a -> m ()
-shouldReturn = liftIO2 E.shouldReturn
+shouldReturn :: (Show a, Eq a, MonadIO m) => m a -> a -> m ()
+action `shouldReturn` expected = action >>= liftIO . (`E.shouldBe` expected)
 
 -- |
 -- @action \`shouldThrow\` selector@ sets the expectation that @action@ throws
