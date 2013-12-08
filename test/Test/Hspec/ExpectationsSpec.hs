@@ -67,18 +67,18 @@ spec = do
       shouldNotHold $
         "foo" `shouldContain` "bar"
 
-  describe "shouldPermute" $ do
+  describe "shouldMatchList" $ do
     it "succeeds if arguments are empty lists" $ do
       shouldHold $
-        [] `shouldPermute` ([] :: [Int])
+        [] `shouldMatchList` ([] :: [Int])
 
     it "succeeds if arguments are equal up to permutation" $ do
       shouldHold $
-        [1, 2, 2, 3] `shouldPermute` [3, 2, 1, 2 :: Int]
+        [1, 2, 2, 3] `shouldMatchList` [3, 2, 1, 2 :: Int]
 
     it "fails if arguments are not equal up to permutation" $ do
       shouldNotHold $
-        [1, 2, 2, 3] `shouldPermute` [1, 2, 3 :: Int]
+        [1, 2, 2, 3] `shouldMatchList` [1, 2, 3 :: Int]
 
   describe "shouldThrow" $ do
     it "can be used to require a specific exception" $ do

@@ -8,7 +8,7 @@ module Test.Hspec.Expectations (
 , shouldBe
 , shouldSatisfy
 , shouldContain
-, shouldPermute
+, shouldMatchList
 , shouldReturn
 
 -- * Expecting exceptions
@@ -48,7 +48,7 @@ type Expectation = Assertion
 expectationFailure :: String -> Expectation
 expectationFailure = assertFailure
 
-infix 1 `shouldBe`, `shouldSatisfy`, `shouldContain`, `shouldPermute`, `shouldReturn`, `shouldThrow`
+infix 1 `shouldBe`, `shouldSatisfy`, `shouldContain`, `shouldMatchList`, `shouldReturn`, `shouldThrow`
 
 -- |
 -- @actual \`shouldBe\` expected@ sets the expectation that @actual@ is equal
@@ -70,10 +70,10 @@ list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
     errorMsg = show list ++ " doesn't contain " ++ show sublist
 
 -- |
--- @xs \`shouldPermute\` ys@ sets the expectation that @xs@ has the same
+-- @xs \`shouldMatchList\` ys@ sets the expectation that @xs@ has the same
 -- elements that @ys@ has, possibly in another order
-shouldPermute :: (Show a, Eq a) => [a] -> [a] -> Expectation
-xs `shouldPermute` ys = assertBool errorMsg (all null [xs \\ ys, ys \\ xs])
+shouldMatchList :: (Show a, Eq a) => [a] -> [a] -> Expectation
+xs `shouldMatchList` ys = assertBool errorMsg (all null [xs \\ ys, ys \\ xs])
   where
     errorMsg = show ys ++ " is not a permutation of " ++ show xs
 
