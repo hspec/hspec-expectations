@@ -27,7 +27,6 @@ library
       src
   exposed-modules:
       Test.Hspec.Expectations
-    , Test.Hspec.Expectations.Lifted
     , Test.Hspec.Expectations.Contrib
 
 test-suite spec

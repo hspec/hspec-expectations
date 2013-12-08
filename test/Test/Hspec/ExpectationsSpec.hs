@@ -8,7 +8,6 @@ import           Control.Exception
 import           System.IO.Silently
 
 import           Test.Hspec.Expectations
-import           Test.Hspec.Expectations.Lifted ()
 
 main :: IO ()
 main = hspec spec
