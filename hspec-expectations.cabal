@@ -22,7 +22,6 @@ library
   build-depends:
       base < 4.8
     , HUnit
-    , transformers
   hs-source-dirs:
       src
   exposed-modules:
@@ -42,7 +41,6 @@ test-suite spec
   build-depends:
       base
     , HUnit
-    , transformers
     , silently
     , hspec       >= 1.3
 
