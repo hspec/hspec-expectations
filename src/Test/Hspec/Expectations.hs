@@ -87,7 +87,7 @@ list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
 -- @list \`shouldNotContain\` sublist@ sets the expectation that @sublist@ is not
 -- contained anywhere in the second.
 shouldNotContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
-list `shouldNotContain` sublist = assertBool errorMsg ((not . isInfixOf) sublist list)
+list `shouldNotContain` sublist = assertBool errorMsg ((not . isInfixOf sublist) list)
   where
     errorMsg = show list ++ " does contain " ++ show sublist
 
