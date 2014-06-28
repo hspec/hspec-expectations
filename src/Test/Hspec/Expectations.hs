@@ -6,8 +6,11 @@ module Test.Hspec.Expectations (
   Expectation
 , expectationFailure
 , shouldBe
+, shouldNotBe
 , shouldSatisfy
+, shouldNotSatisfy
 , shouldContain
+, shouldNotContain
 , shouldMatchList
 , shouldReturn
 
