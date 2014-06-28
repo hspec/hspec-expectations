@@ -6,10 +6,14 @@ module Test.Hspec.Expectations (
   Expectation
 , expectationFailure
 , shouldBe
+, shouldNotBe
 , shouldSatisfy
+, shouldNotSatisfy
 , shouldContain
+, shouldNotContain
 , shouldMatchList
 , shouldReturn
+, shouldNotReturn
 
 -- * Expecting exceptions
 , shouldThrow
@@ -48,7 +52,7 @@ type Expectation = Assertion
 expectationFailure :: String -> Expectation
 expectationFailure = assertFailure
 
-infix 1 `shouldBe`, `shouldSatisfy`, `shouldContain`, `shouldMatchList`, `shouldReturn`, `shouldThrow`
+infix 1 `shouldBe`, `shouldNotBe`, `shouldSatisfy`, `shouldNotSatisfy`, `shouldContain`, `shouldNotContain`, `shouldMatchList`, `shouldReturn`, `shouldNotReturn`, `shouldThrow`
 
 -- |
 -- @actual \`shouldBe\` expected@ sets the expectation that @actual@ is equal
@@ -57,9 +61,20 @@ shouldBe :: (Show a, Eq a) => a -> a -> Expectation
 actual `shouldBe` expected = actual @?= expected
 
 -- |
+-- @actual \`shouldNotBe\` notExpected@ sets the expectation that @actual@ is not
+-- equal to @notExpected@
+shouldNotBe :: (Show a, Eq a) => a -> a -> Expectation
+actual `shouldNotBe` notExpected = assertBool ("not expected: " ++ show actual) (actual /= notExpected)
+
+-- |
 -- @v \`shouldSatisfy\` p@ sets the expectation that @p v@ is @True@.
 shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Expectation
 v `shouldSatisfy` p = assertBool ("predicate failed on: " ++ show v) (p v)
+
+-- |
+-- @v \`shouldNotSatisfy\` p@ sets the expectation that @p v@ is @False@.
+shouldNotSatisfy :: (Show a) => a -> (a -> Bool) -> Expectation
+v `shouldNotSatisfy` p = assertBool ("predicate succeded on: " ++ show v) ((not . p) v)
 
 -- |
 -- @list \`shouldContain\` sublist@ sets the expectation that @sublist@ is contained,
@@ -68,6 +83,14 @@ shouldContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
 list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
   where
     errorMsg = show list ++ " doesn't contain " ++ show sublist
+    
+-- |
+-- @list \`shouldNotContain\` sublist@ sets the expectation that @sublist@ is not
+-- contained anywhere in the second.
+shouldNotContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
+list `shouldNotContain` sublist = assertBool errorMsg ((not . isInfixOf sublist) list)
+  where
+    errorMsg = show list ++ " does contain " ++ show sublist
 
 -- |
 -- @xs \`shouldMatchList\` ys@ sets the expectation that @xs@ has the same
@@ -82,6 +105,12 @@ xs `shouldMatchList` ys = assertBool errorMsg (all null [xs \\ ys, ys \\ xs])
 -- returns @expected@.
 shouldReturn :: (Show a, Eq a) => IO a -> a -> Expectation
 action `shouldReturn` expected = action >>= (`shouldBe` expected)
+
+-- |
+-- @action \`shouldNotReturn\` notExpected@ sets the expectation that @action@
+-- does not return @expected@.
+shouldNotReturn :: (Show a, Eq a) => IO a -> a -> Expectation
+action `shouldNotReturn` notExpected = action >>= (`shouldNotBe` notExpected)
 
 -- |
 -- A @Selector@ is a predicate; it can simultaneously constrain the type and
