@@ -13,6 +13,7 @@ module Test.Hspec.Expectations (
 , shouldNotContain
 , shouldMatchList
 , shouldReturn
+, shouldNotReturn
 
 -- * Expecting exceptions
 , shouldThrow
