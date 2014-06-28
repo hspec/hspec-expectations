@@ -51,7 +51,7 @@ type Expectation = Assertion
 expectationFailure :: String -> Expectation
 expectationFailure = assertFailure
 
-infix 1 `shouldBe`, `shouldNotBe`, `shouldSatisfy`, `shouldNotSatisfy`, `shouldContain`, `shouldNotContain`, `shouldMatchList`, `shouldReturn`, `shouldThrow`
+infix 1 `shouldBe`, `shouldNotBe`, `shouldSatisfy`, `shouldNotSatisfy`, `shouldContain`, `shouldNotContain`, `shouldMatchList`, `shouldReturn`, `shouldNotReturn`, `shouldThrow`
 
 -- |
 -- @actual \`shouldBe\` expected@ sets the expectation that @actual@ is equal
@@ -87,7 +87,7 @@ list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
 -- @list \`shouldNotContain\` sublist@ sets the expectation that @sublist@ is not
 -- contained anywhere in the second.
 shouldNotContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
-list `shouldContain` sublist = assertBool errorMsg ((not . isInfixOf) sublist list)
+list `shouldNotContain` sublist = assertBool errorMsg ((not . isInfixOf) sublist list)
   where
     errorMsg = show list ++ " does contain " ++ show sublist
 
