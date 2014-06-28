@@ -109,7 +109,7 @@ action `shouldReturn` expected = action >>= (`shouldBe` expected)
 -- @action \`shouldNotReturn\` notExpected@ sets the expectation that @action@
 -- does not return @expected@.
 shouldNotReturn :: (Show a, Eq a) => IO a -> a -> Expectation
-action `shouldNotReturn` notExpected = action >>= (`shouldNotBe` expected)
+action `shouldNotReturn` notExpected = action >>= (`shouldNotBe` notExpected)
 
 -- |
 -- A @Selector@ is a predicate; it can simultaneously constrain the type and
