@@ -3,26 +3,13 @@ module Test.Hspec.ExpectationsSpec (main, spec) where
 import           Test.Hspec.HUnit()
 import           Test.Hspec (Spec, describe, it)
 import           Test.Hspec.Runner
-import           Test.HUnit
 import           Control.Exception
-import           System.IO.Silently
 
 import           Test.Hspec.Expectations
+import           Test.Utils
 
 main :: IO ()
 main = hspec spec
-
-shouldResultIn :: Assertion -> String -> IO ()
-shouldResultIn expectation result = do
-  r <- fmap (last . lines) . capture_ . hspecWith defaultConfig $ do
-    it "" expectation
-  r @?= result
-
-shouldHold :: Assertion -> Assertion
-shouldHold = (`shouldResultIn` "1 example, 0 failures")
-
-shouldNotHold :: Assertion -> Assertion
-shouldNotHold = (`shouldResultIn` "1 example, 1 failure")
 
 spec :: Spec
 spec = do
@@ -34,14 +21,6 @@ spec = do
     it "fails if arguments are not equal" $ do
       shouldNotHold $
         "foo" `shouldBe` "bar"
-        
-  describe "shouldNotBe" $ do
-    it "succeeds if arguments are not equal" $ do
-      shouldHold $
-        "foo" `shouldNotBe` "bar"
-    it "fails if arguments are equal" $ do
-      shouldNotHold $
-        "foo" `shouldNotBe` "foo"
 
   describe "shouldSatisfy" $ do
     it "succeeds if value satisfies predicate" $ do
@@ -51,14 +30,6 @@ spec = do
     it "fails if value does not satisfy predicate" $ do
       shouldNotHold $
         "foo" `shouldSatisfy` null
-        
-  describe "shouldNotSatisfy" $ do
-    it "succeeds if value does not satisfy predicate" $ do
-      shouldHold $
-        "bar" `shouldNotSatisfy` null
-    it "fails if the value does satisfy predicate" $ do
-      shouldNotHold $
-        "" `shouldNotSatisfy` null
 
   describe "shouldReturn" $ do
     it "succeeds if arguments represent equal values" $ do
@@ -68,15 +39,6 @@ spec = do
     it "fails if arguments do not represent equal values" $ do
       shouldNotHold $
         return "foo" `shouldReturn` "bar"
-        
-  describe "shouldNotReturn" $ do
-    it "succeeds if arguments does not represent equal values" $ do
-      shouldHold $
-        return "foo" `shouldNotReturn` "bar"
-
-    it "fails if arguments do represent equal values" $ do
-      shouldNotHold $
-        return "foo" `shouldNotReturn` "foo"
 
   describe "shouldContain" $ do
     it "succeeds if second argument is contained in the first" $ do
@@ -90,19 +52,6 @@ spec = do
     it "fails if first argument doesn't contain the second" $ do
       shouldNotHold $
         "foo" `shouldContain` "bar"
-
-  describe "shouldNotContain" $ do
-    it "succeeds if second argument is not contained in the first" $ do
-      shouldHold $
-        "I'm an hello world message" `shouldNotContain` "test"
-
-    it "succeds not only with strings" $ do
-      shouldHold $
-        ([1,2,3,4,5] :: [Int]) `shouldNotContain` ([9, 6] :: [Int])
-
-    it "fails if first argument does contain the second" $ do
-      shouldNotHold $
-        "foo abc def" `shouldNotContain` "def"
 
   describe "shouldMatchList" $ do
     it "succeeds if arguments are empty lists" $ do
