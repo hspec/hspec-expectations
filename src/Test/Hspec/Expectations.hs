@@ -68,7 +68,7 @@ shouldContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
 list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
   where
     errorMsg = show list ++ " doesn't contain " ++ show sublist
-
+    
 -- |
 -- @xs \`shouldMatchList\` ys@ sets the expectation that @xs@ has the same
 -- elements that @ys@ has, possibly in another order

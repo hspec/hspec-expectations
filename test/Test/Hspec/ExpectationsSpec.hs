@@ -3,26 +3,13 @@ module Test.Hspec.ExpectationsSpec (main, spec) where
 import           Test.Hspec.HUnit()
 import           Test.Hspec (Spec, describe, it)
 import           Test.Hspec.Runner
-import           Test.HUnit
 import           Control.Exception
-import           System.IO.Silently
 
 import           Test.Hspec.Expectations
+import           Test.Utils
 
 main :: IO ()
 main = hspec spec
-
-shouldResultIn :: Assertion -> String -> IO ()
-shouldResultIn expectation result = do
-  r <- fmap (last . lines) . capture_ . hspecWith defaultConfig $ do
-    it "" expectation
-  r @?= result
-
-shouldHold :: Assertion -> Assertion
-shouldHold = (`shouldResultIn` "1 example, 0 failures")
-
-shouldNotHold :: Assertion -> Assertion
-shouldNotHold = (`shouldResultIn` "1 example, 1 failure")
 
 spec :: Spec
 spec = do
