@@ -6,7 +6,7 @@ import           Test.Hspec.Runner
 import           Control.Exception
 
 import           Test.Hspec.Expectations
-import           Test.Utils
+import           Helper
 
 main :: IO ()
 main = hspec spec

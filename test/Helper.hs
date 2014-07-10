@@ -1,4 +1,4 @@
-module Test.Utils where
+module Helper where
 
 import           Test.Hspec.HUnit()
 import           Test.Hspec (it)

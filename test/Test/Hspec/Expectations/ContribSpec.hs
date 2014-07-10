@@ -1,8 +1,8 @@
 module Test.Hspec.Expectations.ContribSpec (spec) where
 
-import Test.Hspec
-import Test.Hspec.Expectations.Contrib
-import Test.Utils
+import           Test.Hspec
+import           Test.Hspec.Expectations.Contrib
+import           Helper
 
 spec :: Spec
 spec = do
