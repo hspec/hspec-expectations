@@ -2,17 +2,16 @@
 -- Experimental combinators, that may become part of the main distribution, if
 -- they turn out to be useful for a wider audience.
 module Test.Hspec.Expectations.Contrib (
-
-  module Test.Hspec.Expectations
+-- * Additional combinators for setting expectations
+  shouldNotBe
+, shouldNotSatisfy
+, shouldNotReturn
+, shouldNotContain
 
 -- * Predicates
 -- | (useful in combination with `shouldSatisfy`)
 , isLeft
 , isRight
-, shouldNotBe
-, shouldNotSatisfy
-, shouldNotReturn
-, shouldNotContain
 ) where
 
 import Test.Hspec.Expectations
@@ -50,6 +49,6 @@ list `shouldNotContain` sublist = assertBool errorMsg ((not . isInfixOf sublist)
 
 -- |
 -- @action \`shouldNotReturn\` notExpected@ sets the expectation that @action@
--- does not return @expected@.
+-- does not return @notExpected@.
 shouldNotReturn :: (Show a, Eq a) => IO a -> a -> Expectation
 action `shouldNotReturn` notExpected = action >>= (`shouldNotBe` notExpected)
