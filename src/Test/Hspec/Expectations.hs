@@ -63,7 +63,7 @@ v `shouldSatisfy` p = assertBool ("predicate failed on: " ++ show v) (p v)
 
 -- |
 -- @list \`shouldContain\` sublist@ sets the expectation that @sublist@ is contained,
--- wholly and intact, anywhere in the second.
+-- wholly and intact, anywhere in @list@.
 shouldContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
 list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
   where
