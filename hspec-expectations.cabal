@@ -27,6 +27,8 @@ library
   exposed-modules:
       Test.Hspec.Expectations
     , Test.Hspec.Expectations.Contrib
+  other-modules:
+      Test.Hspec.Expectations.Matcher
 
 test-suite spec
   main-is:

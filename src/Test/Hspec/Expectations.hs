@@ -40,7 +40,9 @@ module Test.Hspec.Expectations (
 import           Test.HUnit (Assertion, (@?=), assertBool, assertFailure)
 import           Control.Exception
 import           Data.Typeable
-import           Data.List ((\\), isInfixOf)
+import           Data.List (isInfixOf)
+
+import           Test.Hspec.Expectations.Matcher
 
 type Expectation = Assertion
 
@@ -73,9 +75,7 @@ list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
 -- @xs \`shouldMatchList\` ys@ sets the expectation that @xs@ has the same
 -- elements that @ys@ has, possibly in another order
 shouldMatchList :: (Show a, Eq a) => [a] -> [a] -> Expectation
-xs `shouldMatchList` ys = assertBool errorMsg (all null [xs \\ ys, ys \\ xs])
-  where
-    errorMsg = show ys ++ " is not a permutation of " ++ show xs
+xs `shouldMatchList` ys = maybe (return ()) assertFailure (matchList xs ys)
 
 -- |
 -- @action \`shouldReturn\` expected@ sets the expectation that @action@
