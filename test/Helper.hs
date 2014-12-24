@@ -1,6 +1,5 @@
 module Helper where
 
-import           Test.Hspec.HUnit()
 import           Test.Hspec (it)
 import           Test.Hspec.Runner
 import           Test.HUnit

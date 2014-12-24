@@ -1,6 +1,5 @@
 module Test.Hspec.ExpectationsSpec (main, spec) where
 
-import           Test.Hspec.HUnit()
 import           Test.Hspec (Spec, describe, it)
 import           Test.Hspec.Runner
 import           Control.Exception
