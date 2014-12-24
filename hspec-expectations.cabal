@@ -36,7 +36,7 @@ test-suite spec
   type:
       exitcode-stdio-1.0
   ghc-options:
-      -Wall -Werror
+      -Wall
   hs-source-dirs:
       src
     , test
@@ -44,16 +44,16 @@ test-suite spec
       base
     , HUnit
     , silently
-    , hspec       >= 1.3
+    , hspec == 2.*
 
 test-suite readme
   type:
       exitcode-stdio-1.0
   ghc-options:
-      -Wall -Werror -pgmL markdown-unlit -optL haskell+literate
+      -Wall -pgmL markdown-unlit -optL haskell+literate
   main-is:
       README.lhs
   build-depends:
       base
-    , hspec       >= 1.3
+    , hspec >= 1.3
     , markdown-unlit

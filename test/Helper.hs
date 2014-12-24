@@ -8,7 +8,7 @@ import           System.IO.Silently
 
 shouldResultIn :: Assertion -> String -> IO ()
 shouldResultIn expectation result = do
-  r <- fmap (last . lines) . capture_ . hspecWith defaultConfig $ do
+  r <- fmap (last . lines) . capture_ . hspecWithResult defaultConfig $ do
     it "" expectation
   r @?= result
 
