@@ -29,31 +29,3 @@ library
     , Test.Hspec.Expectations.Contrib
   other-modules:
       Test.Hspec.Expectations.Matcher
-
-test-suite spec
-  main-is:
-      Spec.hs
-  type:
-      exitcode-stdio-1.0
-  ghc-options:
-      -Wall
-  hs-source-dirs:
-      src
-    , test
-  build-depends:
-      base
-    , HUnit
-    , silently
-    , hspec == 2.*
-
-test-suite readme
-  type:
-      exitcode-stdio-1.0
-  ghc-options:
-      -Wall -pgmL markdown-unlit -optL haskell+literate
-  main-is:
-      README.lhs
-  build-depends:
-      base
-    , hspec >= 1.3
-    , markdown-unlit

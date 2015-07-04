@@ -1,104 +1,80 @@
-module Test.Hspec.ExpectationsSpec (main, spec) where
+{-# LANGUAGE StandaloneDeriving #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+module Test.Hspec.ExpectationsSpec (spec) where
 
-import           Test.Hspec (Spec, describe, it)
-import           Test.Hspec.Runner
 import           Control.Exception
+import           Test.Hspec (Spec, describe, it)
+import           Test.HUnit.Lang
 
 import           Test.Hspec.Expectations
-import           Helper
 
-main :: IO ()
-main = hspec spec
+deriving instance Eq HUnitFailure
 
 spec :: Spec
 spec = do
   describe "shouldBe" $ do
     it "succeeds if arguments are equal" $ do
-      shouldHold $
-        "foo" `shouldBe` "foo"
+      "foo" `shouldBe` "foo"
 
     it "fails if arguments are not equal" $ do
-      shouldNotHold $
-        "foo" `shouldBe` "bar"
+      ("foo" `shouldBe` "bar") `shouldThrow` (== HUnitFailure "expected: \"bar\"\n but got: \"foo\"")
 
   describe "shouldSatisfy" $ do
     it "succeeds if value satisfies predicate" $ do
-      shouldHold $
-        "" `shouldSatisfy` null
+      "" `shouldSatisfy` null
 
     it "fails if value does not satisfy predicate" $ do
-      shouldNotHold $
-        "foo" `shouldSatisfy` null
+      ("foo" `shouldSatisfy` null) `shouldThrow` (== HUnitFailure "predicate failed on: \"foo\"")
 
   describe "shouldReturn" $ do
     it "succeeds if arguments represent equal values" $ do
-      shouldHold $
-        return "foo" `shouldReturn` "foo"
+      return "foo" `shouldReturn` "foo"
 
     it "fails if arguments do not represent equal values" $ do
-      shouldNotHold $
-        return "foo" `shouldReturn` "bar"
+      (return "foo" `shouldReturn` "bar") `shouldThrow` (== HUnitFailure "expected: \"bar\"\n but got: \"foo\"")
 
   describe "shouldStartWith" $ do
     it "succeeds if second is prefix of first" $ do
-      shouldHold $
-        "hello world" `shouldStartWith` "hello"
+      "hello world" `shouldStartWith` "hello"
 
-    it "fails if second is not in the beginning of first" $ do
-      shouldNotHold $
-        "hello world" `shouldStartWith` "world"
+    it "fails if second is not prefix of first" $ do
+      ("hello world" `shouldStartWith` "world") `shouldThrow` (== HUnitFailure "\"hello world\" does not start with \"world\"")
 
   describe "shouldEndWith" $ do
     it "succeeds if second is suffix of first" $ do
-      shouldHold $
-        "hello world" `shouldEndWith` "world"
+      "hello world" `shouldEndWith` "world"
 
-    it "fails if second is not at the end of first" $ do
-      shouldNotHold $
-        "hello world" `shouldEndWith` "hello"
+    it "fails if second is not suffix of first" $ do
+      ("hello world" `shouldEndWith` "hello") `shouldThrow` (== HUnitFailure "\"hello world\" does not end with \"hello\"")
 
   describe "shouldContain" $ do
     it "succeeds if second argument is contained in the first" $ do
-      shouldHold $
-        "I'm an hello world message" `shouldContain` "an hello"
+      "I'm an hello world message" `shouldContain` "an hello"
 
-    it "succeds not only with strings" $ do
-      shouldHold $
-        ([1,2,3,4,5] :: [Int]) `shouldContain` ([3,4] :: [Int])
-
-    it "fails if first argument doesn't contain the second" $ do
-      shouldNotHold $
-        "foo" `shouldContain` "bar"
+    it "fails if first argument does not contain the second" $ do
+      ("foo" `shouldContain` "bar") `shouldThrow` (== HUnitFailure "\"foo\" does not contain \"bar\"")
 
   describe "shouldThrow" $ do
     it "can be used to require a specific exception" $ do
-      shouldHold $
-        throw DivideByZero `shouldThrow` (== DivideByZero)
+      throwIO DivideByZero `shouldThrow` (== DivideByZero)
 
     it "can be used to require any exception" $ do
-      shouldHold $
-        error "foobar" `shouldThrow` anyException
+      error "foobar" `shouldThrow` anyException
 
     it "can be used to require an exception of a specific type" $ do
-      shouldHold $
-        error "foobar" `shouldThrow` anyErrorCall
+      error "foobar" `shouldThrow` anyErrorCall
 
     it "can be used to require a specific exception" $ do
-      shouldHold $
-        error "foobar" `shouldThrow` errorCall "foobar"
+      error "foobar" `shouldThrow` errorCall "foobar"
 
     it "fails, if a required specific exception is not thrown" $ do
-      shouldNotHold $
-        throw Overflow `shouldThrow` (== DivideByZero)
+      (throwIO Overflow `shouldThrow` (== DivideByZero)) `shouldThrow` (== HUnitFailure "predicate failed on expected exception: ArithException (arithmetic overflow)")
 
     it "fails, if any exception is required, but no exception occurs" $ do
-      shouldNotHold $
-        return () `shouldThrow` anyException
+      (return () `shouldThrow` anyException) `shouldThrow` (== HUnitFailure "did not get expected exception: SomeException")
 
     it "fails, if a required exception of a specific type is not thrown" $ do
-      shouldNotHold $
-        return () `shouldThrow` anyErrorCall
+      (return () `shouldThrow` anyErrorCall) `shouldThrow` (== HUnitFailure "did not get expected exception: ErrorCall")
 
     it "fails, if a required specific exception is not thrown" $ do
-      shouldNotHold $
-        error "foo" `shouldThrow` errorCall "foobar"
+      (error "foo" `shouldThrow` errorCall "foobar") `shouldThrow` (== HUnitFailure "predicate failed on expected exception: ErrorCall (foo)")
