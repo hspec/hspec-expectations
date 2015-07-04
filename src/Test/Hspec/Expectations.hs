@@ -13,6 +13,11 @@ module Test.Hspec.Expectations (
 , shouldMatchList
 , shouldReturn
 
+, shouldNotBe
+, shouldNotSatisfy
+, shouldNotContain
+, shouldNotReturn
+
 -- * Expecting exceptions
 , shouldThrow
 
@@ -53,6 +58,7 @@ expectationFailure :: String -> Expectation
 expectationFailure = assertFailure
 
 infix 1 `shouldBe`, `shouldSatisfy`, `shouldStartWith`, `shouldEndWith`, `shouldContain`, `shouldMatchList`, `shouldReturn`, `shouldThrow`
+infix 1 `shouldNotBe`, `shouldNotSatisfy`, `shouldNotContain`, `shouldNotReturn`
 
 -- |
 -- @actual \`shouldBe\` expected@ sets the expectation that @actual@ is equal
@@ -97,6 +103,31 @@ xs `shouldMatchList` ys = maybe (return ()) assertFailure (matchList xs ys)
 -- returns @expected@.
 shouldReturn :: (Show a, Eq a) => IO a -> a -> Expectation
 action `shouldReturn` expected = action >>= (`shouldBe` expected)
+
+-- |
+-- @actual \`shouldNotBe\` notExpected@ sets the expectation that @actual@ is not
+-- equal to @notExpected@
+shouldNotBe :: (Show a, Eq a) => a -> a -> Expectation
+actual `shouldNotBe` notExpected = assertBool ("not expected: " ++ show actual) (actual /= notExpected)
+
+-- |
+-- @v \`shouldNotSatisfy\` p@ sets the expectation that @p v@ is @False@.
+shouldNotSatisfy :: (Show a) => a -> (a -> Bool) -> Expectation
+v `shouldNotSatisfy` p = assertBool ("predicate succeded on: " ++ show v) ((not . p) v)
+
+-- |
+-- @list \`shouldNotContain\` sublist@ sets the expectation that @sublist@ is not
+-- contained anywhere in @list@.
+shouldNotContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
+list `shouldNotContain` sublist = assertBool errorMsg ((not . isInfixOf sublist) list)
+  where
+    errorMsg = show list ++ " does contain " ++ show sublist
+
+-- |
+-- @action \`shouldNotReturn\` notExpected@ sets the expectation that @action@
+-- does not return @notExpected@.
+shouldNotReturn :: (Show a, Eq a) => IO a -> a -> Expectation
+action `shouldNotReturn` notExpected = action >>= (`shouldNotBe` notExpected)
 
 -- |
 -- A @Selector@ is a predicate; it can simultaneously constrain the type and
