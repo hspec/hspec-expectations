@@ -65,27 +65,26 @@ actual `shouldBe` expected = actual @?= expected
 shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Expectation
 v `shouldSatisfy` p = assertBool ("predicate failed on: " ++ show v) (p v)
 
+shouldCompareWith :: (Show a, Eq a) => (a -> a -> Bool) -> String -> a -> a -> Expectation
+shouldCompareWith comparator errorDesc result expected =  assertBool errorMsg (comparator expected result)
+  where
+    errorMsg = show result ++ " " ++ errorDesc ++ " " ++ show expected
+
 -- |
 -- @list \`shouldContain\` prefix@ sets the expectation that @list@ starts with @prefix@,
 shouldStartWith :: (Show a, Eq a) => [a] -> [a] -> Expectation
-list `shouldStartWith` prefix =  assertBool errorMsg (prefix `isPrefixOf` list)
-  where
-    errorMsg = show list ++ " doesn't start with " ++ show prefix
+shouldStartWith = shouldCompareWith isPrefixOf "doesn't start with"
 
 -- |
 -- @list \`shouldContain\` suffix@ sets the expectation that @list@ ends with @suffix@,
 shouldEndWith :: (Show a, Eq a) => [a] -> [a] -> Expectation
-list `shouldEndWith` suffix =  assertBool errorMsg (suffix `isSuffixOf` list)
-  where
-    errorMsg = show list ++ " doesn't end with " ++ show suffix
+shouldEndWith = shouldCompareWith isSuffixOf "doesn't end with"
 
 -- |
 -- @list \`shouldContain\` sublist@ sets the expectation that @sublist@ is contained,
 -- wholly and intact, anywhere in @list@.
 shouldContain :: (Show a, Eq a) => [a] -> [a] -> Expectation
-list `shouldContain` sublist = assertBool errorMsg (sublist `isInfixOf` list)
-  where
-    errorMsg = show list ++ " doesn't contain " ++ show sublist
+shouldContain = shouldCompareWith isInfixOf "doesn't contain"
 
 -- |
 -- @xs \`shouldMatchList\` ys@ sets the expectation that @xs@ has the same
