@@ -7,6 +7,8 @@ module Test.Hspec.Expectations (
 , expectationFailure
 , shouldBe
 , shouldSatisfy
+, shouldStartWith
+, shouldEndWith
 , shouldContain
 , shouldMatchList
 , shouldReturn
@@ -40,7 +42,7 @@ module Test.Hspec.Expectations (
 import           Test.HUnit (Assertion, (@?=), assertBool, assertFailure)
 import           Control.Exception
 import           Data.Typeable
-import           Data.List (isInfixOf)
+import           Data.List
 
 import           Test.Hspec.Expectations.Matcher
 
@@ -62,6 +64,20 @@ actual `shouldBe` expected = actual @?= expected
 -- @v \`shouldSatisfy\` p@ sets the expectation that @p v@ is @True@.
 shouldSatisfy :: (Show a) => a -> (a -> Bool) -> Expectation
 v `shouldSatisfy` p = assertBool ("predicate failed on: " ++ show v) (p v)
+
+-- |
+-- @list \`shouldContain\` prefix@ sets the expectation that @list@ starts with @prefix@,
+shouldStartWith :: (Show a, Eq a) => [a] -> [a] -> Expectation
+list `shouldStartWith` prefix =  assertBool errorMsg (prefix `isPrefixOf` list)
+  where
+    errorMsg = show list ++ " doesn't start with " ++ show prefix
+
+-- |
+-- @list \`shouldContain\` suffix@ sets the expectation that @list@ ends with @suffix@,
+shouldEndWith :: (Show a, Eq a) => [a] -> [a] -> Expectation
+list `shouldEndWith` suffix =  assertBool errorMsg (suffix `isSuffixOf` list)
+  where
+    errorMsg = show list ++ " doesn't end with " ++ show suffix
 
 -- |
 -- @list \`shouldContain\` sublist@ sets the expectation that @sublist@ is contained,

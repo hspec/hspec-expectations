@@ -39,6 +39,24 @@ spec = do
       shouldNotHold $
         return "foo" `shouldReturn` "bar"
 
+  describe "shouldStartWith" $ do
+    it "succeeds if second is prefix of first" $ do
+      shouldHold $
+        "hello world" `shouldStartWith` "hello"
+
+    it "fails if second is not in the beginning of first" $ do
+      shouldNotHold $
+        "hello world" `shouldStartWith` "world"
+
+  describe "shouldEndWith" $ do
+    it "succeeds if second is suffix of first" $ do
+      shouldHold $
+        "hello world" `shouldEndWith` "world"
+
+    it "fails if second is not at the end of first" $ do
+      shouldNotHold $
+        "hello world" `shouldEndWith` "hello"
+
   describe "shouldContain" $ do
     it "succeeds if second argument is contained in the first" $ do
       shouldHold $
