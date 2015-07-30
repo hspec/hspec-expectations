@@ -1,14 +1,36 @@
-{-# LANGUAGE StandaloneDeriving #-}
-{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# LANGUAGE CPP #-}
+#if MIN_VERSION_base(4,8,1)
+#define HAS_SOURCE_LOCATIONS
+{-# LANGUAGE ImplicitParams #-}
+#endif
 module Test.Hspec.ExpectationsSpec (spec) where
 
 import           Control.Exception
+import           Data.List
 import           Test.Hspec (Spec, describe, it)
 import           Test.HUnit.Lang
 
 import           Test.Hspec.Expectations
 
-deriving instance Eq HUnitFailure
+#ifdef HAS_SOURCE_LOCATIONS
+
+import           GHC.SrcLoc
+import           GHC.Stack
+
+expectationFailed :: (?loc :: CallStack) => String -> HUnitFailure -> Bool
+#else
+expectationFailed :: String -> HUnitFailure -> Bool
+#endif
+expectationFailed msg (HUnitFailure err) = (location ++ msg) == err
+  where
+    location :: String
+#ifdef HAS_SOURCE_LOCATIONS
+    location = case reverse (getCallStack ?loc) of
+      (_, loc) : _ -> srcLocFile loc ++ ":" ++ (show $ srcLocStartLine loc) ++ ":\n"
+      _ -> ""
+#else
+    location = ""
+#endif
 
 spec :: Spec
 spec = do
@@ -17,70 +39,70 @@ spec = do
       "foo" `shouldBe` "foo"
 
     it "fails if arguments are not equal" $ do
-      ("foo" `shouldBe` "bar") `shouldThrow` (== HUnitFailure "expected: \"bar\"\n but got: \"foo\"")
+      ("foo" `shouldBe` "bar") `shouldThrow` expectationFailed "expected: \"bar\"\n but got: \"foo\""
 
   describe "shouldSatisfy" $ do
     it "succeeds if value satisfies predicate" $ do
       "" `shouldSatisfy` null
 
     it "fails if value does not satisfy predicate" $ do
-      ("foo" `shouldSatisfy` null) `shouldThrow` (== HUnitFailure "predicate failed on: \"foo\"")
+      ("foo" `shouldSatisfy` null) `shouldThrow` expectationFailed "predicate failed on: \"foo\""
 
   describe "shouldReturn" $ do
     it "succeeds if arguments represent equal values" $ do
       return "foo" `shouldReturn` "foo"
 
     it "fails if arguments do not represent equal values" $ do
-      (return "foo" `shouldReturn` "bar") `shouldThrow` (== HUnitFailure "expected: \"bar\"\n but got: \"foo\"")
+      (return "foo" `shouldReturn` "bar") `shouldThrow` expectationFailed "expected: \"bar\"\n but got: \"foo\""
 
   describe "shouldStartWith" $ do
     it "succeeds if second is prefix of first" $ do
       "hello world" `shouldStartWith` "hello"
 
     it "fails if second is not prefix of first" $ do
-      ("hello world" `shouldStartWith` "world") `shouldThrow` (== HUnitFailure "\"hello world\" does not start with \"world\"")
+      ("hello world" `shouldStartWith` "world") `shouldThrow` expectationFailed "\"hello world\" does not start with \"world\""
 
   describe "shouldEndWith" $ do
     it "succeeds if second is suffix of first" $ do
       "hello world" `shouldEndWith` "world"
 
     it "fails if second is not suffix of first" $ do
-      ("hello world" `shouldEndWith` "hello") `shouldThrow` (== HUnitFailure "\"hello world\" does not end with \"hello\"")
+      ("hello world" `shouldEndWith` "hello") `shouldThrow` expectationFailed "\"hello world\" does not end with \"hello\""
 
   describe "shouldContain" $ do
     it "succeeds if second argument is contained in the first" $ do
       "I'm an hello world message" `shouldContain` "an hello"
 
     it "fails if first argument does not contain the second" $ do
-      ("foo" `shouldContain` "bar") `shouldThrow` (== HUnitFailure "\"foo\" does not contain \"bar\"")
+      ("foo" `shouldContain` "bar") `shouldThrow` expectationFailed "\"foo\" does not contain \"bar\""
 
   describe "shouldNotBe" $ do
     it "succeeds if arguments are not equal" $ do
       "foo" `shouldNotBe` "bar"
 
     it "fails if arguments are equal" $ do
-      ("foo" `shouldNotBe` "foo") `shouldThrow` (== HUnitFailure "not expected: \"foo\"")
+      ("foo" `shouldNotBe` "foo") `shouldThrow` expectationFailed "not expected: \"foo\""
 
   describe "shouldNotSatisfy" $ do
     it "succeeds if value does not satisfy predicate" $ do
       "bar" `shouldNotSatisfy` null
 
     it "fails if the value does satisfy predicate" $ do
-      ("" `shouldNotSatisfy` null) `shouldThrow` (== HUnitFailure "predicate succeded on: \"\"")
+      ("" `shouldNotSatisfy` null) `shouldThrow` expectationFailed "predicate succeded on: \"\""
 
   describe "shouldNotReturn" $ do
     it "succeeds if arguments does not represent equal values" $ do
       return "foo" `shouldNotReturn` "bar"
 
     it "fails if arguments do represent equal values" $ do
-      (return "foo" `shouldNotReturn` "foo") `shouldThrow` (== HUnitFailure "not expected: \"foo\"")
+      (return "foo" `shouldNotReturn` "foo") `shouldThrow` expectationFailed "not expected: \"foo\""
 
   describe "shouldNotContain" $ do
     it "succeeds if second argument is not contained in the first" $ do
       "I'm an hello world message" `shouldNotContain` "test"
 
     it "fails if first argument does contain the second" $ do
-      ("foo abc def" `shouldNotContain` "def") `shouldThrow` (== HUnitFailure "\"foo abc def\" does contain \"def\"")
+      ("foo abc def" `shouldNotContain` "def") `shouldThrow` expectationFailed "\"foo abc def\" does contain \"def\""
 
   describe "shouldThrow" $ do
     it "can be used to require a specific exception" $ do
@@ -96,13 +118,13 @@ spec = do
       error "foobar" `shouldThrow` errorCall "foobar"
 
     it "fails, if a required specific exception is not thrown" $ do
-      (throwIO Overflow `shouldThrow` (== DivideByZero)) `shouldThrow` (== HUnitFailure "predicate failed on expected exception: ArithException (arithmetic overflow)")
+      (throwIO Overflow `shouldThrow` (== DivideByZero)) `shouldThrow` expectationFailed "predicate failed on expected exception: ArithException (arithmetic overflow)"
 
     it "fails, if any exception is required, but no exception occurs" $ do
-      (return () `shouldThrow` anyException) `shouldThrow` (== HUnitFailure "did not get expected exception: SomeException")
+      (return () `shouldThrow` anyException) `shouldThrow` expectationFailed "did not get expected exception: SomeException"
 
     it "fails, if a required exception of a specific type is not thrown" $ do
-      (return () `shouldThrow` anyErrorCall) `shouldThrow` (== HUnitFailure "did not get expected exception: ErrorCall")
+      (return () `shouldThrow` anyErrorCall) `shouldThrow` expectationFailed "did not get expected exception: ErrorCall"
 
     it "fails, if a required specific exception is not thrown" $ do
-      (error "foo" `shouldThrow` errorCall "foobar") `shouldThrow` (== HUnitFailure "predicate failed on expected exception: ErrorCall (foo)")
+      (error "foo" `shouldThrow` errorCall "foobar") `shouldThrow` expectationFailed "predicate failed on expected exception: ErrorCall (foo)"
