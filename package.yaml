@@ -1,0 +1,23 @@
+name: hspec-expectations
+version: 0.7.1
+synopsis: Catchy combinators for HUnit
+description: "Catchy combinators for HUnit: <https://github.com/sol/hspec-expectations#readme>"
+license: MIT
+copyright: (c) 2011-2013 Simon Hengel
+author: Simon Hengel <sol@typeful.net>
+maintainer: Simon Hengel <sol@typeful.net>
+category: Testing
+
+github: sol/hspec-expectations
+
+ghc-options: -Wall
+
+dependencies:
+  - base == 4.*
+  - HUnit
+
+library:
+  source-dirs: src
+  exposed-modules:
+    - Test.Hspec.Expectations
+    - Test.Hspec.Expectations.Contrib
