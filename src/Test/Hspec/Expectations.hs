@@ -60,7 +60,6 @@ import           Test.Hspec.Expectations.Matcher
 
 #ifdef HAS_SOURCE_LOCATIONS
 
-import           GHC.SrcLoc
 import           GHC.Stack
 
 #define with_loc(NAME, TYPE) NAME :: (?loc :: CallStack) => TYPE
@@ -74,16 +73,7 @@ import           GHC.Stack
 type Expectation = Test.HUnit.Assertion
 
 with_loc(expectationFailure, String -> Expectation)
-expectationFailure = Test.HUnit.assertFailure . (location ++)
-  where
-    location :: String
-#ifdef HAS_SOURCE_LOCATIONS
-    location = case reverse (getCallStack ?loc) of
-      (_, loc) : _ -> srcLocFile loc ++ ":" ++ (show $ srcLocStartLine loc) ++ ":\n"
-      _ -> ""
-#else
-    location = ""
-#endif
+expectationFailure = Test.HUnit.assertFailure
 
 with_loc(expectTrue, String -> Bool -> Expectation)
 expectTrue msg b = unless b (expectationFailure msg)

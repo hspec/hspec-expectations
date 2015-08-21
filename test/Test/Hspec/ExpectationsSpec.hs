@@ -6,9 +6,8 @@
 module Test.Hspec.ExpectationsSpec (spec) where
 
 import           Control.Exception
-import           Data.List
-import           Test.Hspec (Spec, describe, it)
 import           Test.HUnit.Lang
+import           Test.Hspec (Spec, describe, it)
 
 import           Test.Hspec.Expectations
 
@@ -18,18 +17,18 @@ import           GHC.SrcLoc
 import           GHC.Stack
 
 expectationFailed :: (?loc :: CallStack) => String -> HUnitFailure -> Bool
+expectationFailed msg (HUnitFailure l m) = m == msg && (setColumn <$> l) == location
+  where
+    location :: Maybe Location
+    location = case reverse (getCallStack ?loc) of
+      (_, loc) : _ -> Just $ Location (srcLocFile loc) (srcLocStartLine loc) 0
+      _ -> Nothing
+
+    setColumn :: Location -> Location
+    setColumn loc_ = loc_{locationColumn = 0}
 #else
 expectationFailed :: String -> HUnitFailure -> Bool
-#endif
-expectationFailed msg (HUnitFailure err) = (location ++ msg) == err
-  where
-    location :: String
-#ifdef HAS_SOURCE_LOCATIONS
-    location = case reverse (getCallStack ?loc) of
-      (_, loc) : _ -> srcLocFile loc ++ ":" ++ (show $ srcLocStartLine loc) ++ ":\n"
-      _ -> ""
-#else
-    location = ""
+expectationFailed msg e = e == HUnitFailure Nothing msg
 #endif
 
 spec :: Spec
