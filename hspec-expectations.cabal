@@ -5,8 +5,8 @@
 name:             hspec-expectations
 version:          0.7.2
 synopsis:         Catchy combinators for HUnit
-description:      Catchy combinators for HUnit: <https://github.com/sol/hspec-expectations#readme>
-bug-reports:      https://github.com/sol/hspec-expectations/issues
+description:      Catchy combinators for HUnit: <https://github.com/hspec/hspec-expectations#readme>
+bug-reports:      https://github.com/hspec/hspec-expectations/issues
 license:          MIT
 license-file:     LICENSE
 copyright:        (c) 2011-2015 Simon Hengel
@@ -15,11 +15,11 @@ maintainer:       Simon Hengel <sol@typeful.net>
 build-type:       Simple
 category:         Testing
 cabal-version:    >= 1.10
-homepage:         https://github.com/sol/hspec-expectations#readme
+homepage:         https://github.com/hspec/hspec-expectations#readme
 
 source-repository head
   type: git
-  location: https://github.com/sol/hspec-expectations
+  location: https://github.com/hspec/hspec-expectations
 
 library
   hs-source-dirs:
