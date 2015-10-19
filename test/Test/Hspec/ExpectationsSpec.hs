@@ -40,6 +40,13 @@ spec = do
     it "fails if arguments are not equal" $ do
       ("foo" `shouldBe` "bar") `shouldThrow` expectationFailed "expected: \"bar\"\n but got: \"foo\""
 
+  describe "shouldBeOneOf" $ do
+    it "succeeds if expected contains actual" $ do
+      "foo" `shouldBeOneOf` ["foo", "bar"]
+
+    it "fails if arguments are not equal" $ do
+      ("foo" `shouldBeOneOf` ["bar", "baz"]) `shouldThrow` expectationFailed "expected one of:\n  \"bar\"\n  \"baz\"\n but got: \"foo\""
+
   describe "shouldSatisfy" $ do
     it "succeeds if value satisfies predicate" $ do
       "" `shouldSatisfy` null
@@ -81,6 +88,14 @@ spec = do
 
     it "fails if arguments are equal" $ do
       ("foo" `shouldNotBe` "foo") `shouldThrow` expectationFailed "not expected: \"foo\""
+
+  describe "shouldNotBeOneOf" $ do
+    it "fails if expected contains actual" $ do
+      "foo" `shouldNotBeOneOf` ["foo", "bar"] `shouldThrow` expectationFailed "not expected one of:\n  \"foo\"\n  \"bar\"\n but got: \"foo\""
+
+    it "succeeds if arguments are not equal" $ do
+      ("foo" `shouldNotBeOneOf` ["bar", "baz"])
+
 
   describe "shouldNotSatisfy" $ do
     it "succeeds if value does not satisfy predicate" $ do

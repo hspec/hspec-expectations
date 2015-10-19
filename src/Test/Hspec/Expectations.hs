@@ -23,6 +23,11 @@ module Test.Hspec.Expectations (
 , shouldNotContain
 , shouldNotReturn
 
+, shouldBeOneOf
+, shouldNotBeOneOf
+, shouldReturnOneOf
+, shouldNotReturnOneOf
+
 -- * Expecting exceptions
 , shouldThrow
 
@@ -92,6 +97,13 @@ actual `shouldBe` expected = expectTrue ("expected: " ++ show expected ++ "\n bu
 with_loc(shouldSatisfy, (Show a) => a -> (a -> Bool) -> Expectation)
 v `shouldSatisfy` p = expectTrue ("predicate failed on: " ++ show v) (p v)
 
+-- |
+-- @actual \`shouldBeOneOf` es@ sets the expectation that @actual@ is one of
+-- @es@
+with_loc(shouldBeOneOf, (Show a, Eq a) => a -> [a] -> Expectation)
+actual `shouldBeOneOf` expected = expectTrue ("expected one of:\n" ++ concatMap showe expected ++ " but got: " ++ show actual) (actual `elem` expected)
+  where showe e = "  " ++ show e ++ "\n"
+
 with_loc(compareWith, (Show a, Eq a) => (a -> a -> Bool) -> String -> a -> a -> Expectation)
 compareWith comparator errorDesc result expected = expectTrue errorMsg (comparator expected result)
   where
@@ -126,10 +138,23 @@ with_loc(shouldReturn, (Show a, Eq a) => IO a -> a -> Expectation)
 action `shouldReturn` expected = action >>= (`shouldBe` expected)
 
 -- |
+-- @action \`shouldReturnOneOf` expected@ sets the expectation that @action@
+-- returns one of @expected@
+with_loc(shouldReturnOneOf, (Show a, Eq a) => IO a -> [a] -> Expectation)
+action `shouldReturnOneOf` expected = action >>= (`shouldBeOneOf` expected)
+
+-- |
 -- @actual \`shouldNotBe\` notExpected@ sets the expectation that @actual@ is not
 -- equal to @notExpected@
 with_loc(shouldNotBe, (Show a, Eq a) => a -> a -> Expectation)
 actual `shouldNotBe` notExpected = expectTrue ("not expected: " ++ show actual) (actual /= notExpected)
+
+-- |
+-- @actual \`shouldNotBeOneOf` es@ sets the expectation that @actual@ is not one of
+-- @es@
+with_loc(shouldNotBeOneOf, (Show a, Eq a) => a -> [a] -> Expectation)
+actual `shouldNotBeOneOf` expected = expectTrue ("not expected one of:\n" ++ concatMap showe expected ++ " but got: " ++ show actual) (actual `notElem` expected)
+  where showe e = "  " ++ show e ++ "\n"
 
 -- |
 -- @v \`shouldNotSatisfy\` p@ sets the expectation that @p v@ is @False@.
@@ -149,6 +174,12 @@ list `shouldNotContain` sublist = expectTrue errorMsg ((not . isInfixOf sublist)
 -- does not return @notExpected@.
 with_loc(shouldNotReturn, (Show a, Eq a) => IO a -> a -> Expectation)
 action `shouldNotReturn` notExpected = action >>= (`shouldNotBe` notExpected)
+
+-- |
+-- @action \`shouldNotReturnOneOf` notExpected@ sets the expectation that @action@
+-- does not return one of @notExpected@
+with_loc(shouldNotReturnOneOf, (Show a, Eq a) => IO a -> [a] -> Expectation)
+action `shouldNotReturnOneOf` notExpected = action >>= (`shouldNotBeOneOf` notExpected)
 
 -- |
 -- A @Selector@ is a predicate; it can simultaneously constrain the type and

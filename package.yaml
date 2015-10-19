@@ -7,6 +7,7 @@ copyright: (c) 2011-2015 Simon Hengel
 author: Simon Hengel <sol@typeful.net>
 maintainer: Simon Hengel <sol@typeful.net>
 category: Testing
+tested-with: GHC==7.8.4, GHC==7.10.2
 
 github: hspec/hspec-expectations
 
@@ -21,3 +22,13 @@ library:
   exposed-modules:
     - Test.Hspec.Expectations
     - Test.Hspec.Expectations.Contrib
+
+tests:
+  spec:
+    cpp-options: -DTEST
+    main: Spec.hs
+    source-dirs:
+      - test
+      - src
+    dependencies:
+      - hspec ==2.*
