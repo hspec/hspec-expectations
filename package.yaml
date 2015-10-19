@@ -7,7 +7,7 @@ copyright: (c) 2011-2015 Simon Hengel
 author: Simon Hengel <sol@typeful.net>
 maintainer: Simon Hengel <sol@typeful.net>
 category: Testing
-tested-with: GHC==7.8.4, GHC==7.10.2
+tested-with: GHC==7.6.3, GHC==7.8.4, GHC==7.10.2
 
 github: hspec/hspec-expectations
 
