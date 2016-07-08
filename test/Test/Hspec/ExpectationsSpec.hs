@@ -87,7 +87,7 @@ spec = do
       "bar" `shouldNotSatisfy` null
 
     it "fails if the value does satisfy predicate" $ do
-      ("" `shouldNotSatisfy` null) `shouldThrow` expectationFailed "predicate succeded on: \"\""
+      ("" `shouldNotSatisfy` null) `shouldThrow` expectationFailed "predicate succeeded on: \"\""
 
   describe "shouldNotReturn" $ do
     it "succeeds if arguments does not represent equal values" $ do
