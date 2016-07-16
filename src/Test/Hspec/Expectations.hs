@@ -134,7 +134,7 @@ actual `shouldNotBe` notExpected = expectTrue ("not expected: " ++ show actual) 
 -- |
 -- @v \`shouldNotSatisfy\` p@ sets the expectation that @p v@ is @False@.
 with_loc(shouldNotSatisfy, (Show a) => a -> (a -> Bool) -> Expectation)
-v `shouldNotSatisfy` p = expectTrue ("predicate succeded on: " ++ show v) ((not . p) v)
+v `shouldNotSatisfy` p = expectTrue ("predicate succeeded on: " ++ show v) ((not . p) v)
 
 -- |
 -- @list \`shouldNotContain\` sublist@ sets the expectation that @sublist@ is not
