@@ -57,6 +57,7 @@ import           Data.List
 import           Control.Monad (unless)
 
 import           Test.Hspec.Expectations.Matcher
+import           Text.Show.Pretty (ppShow)
 
 #ifdef HAS_SOURCE_LOCATIONS
 
@@ -85,7 +86,10 @@ infix 1 `shouldNotBe`, `shouldNotSatisfy`, `shouldNotContain`, `shouldNotReturn`
 -- @actual \`shouldBe\` expected@ sets the expectation that @actual@ is equal
 -- to @expected@.
 with_loc(shouldBe, (Show a, Eq a) => a -> a -> Expectation)
-actual `shouldBe` expected = expectTrue ("expected: " ++ show expected ++ "\n but got: " ++ show actual) (actual == expected)
+actual `shouldBe` expected =
+  expectTrue msg (actual == expected)
+  where msg = "Expected:  " ++ ppShow expected ++ "\n" ++
+              "Actual: " ++ ppShow actual ++ "\n"
 
 -- |
 -- @v \`shouldSatisfy\` p@ sets the expectation that @p v@ is @True@.
