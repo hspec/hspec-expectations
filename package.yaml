@@ -15,6 +15,7 @@ ghc-options: -Wall
 dependencies:
   - base == 4.*
   - HUnit
+  - pretty-show >= 1.6
 
 library:
   source-dirs: src

@@ -1,4 +1,4 @@
--- This file has been generated from package.yaml by hpack version 0.5.4.
+-- This file has been generated from package.yaml by hpack version 0.14.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -28,9 +28,11 @@ library
   build-depends:
       base == 4.*
     , HUnit
+    , pretty-show >= 1.6
   exposed-modules:
       Test.Hspec.Expectations
       Test.Hspec.Expectations.Contrib
   other-modules:
       Test.Hspec.Expectations.Matcher
+      Paths_hspec_expectations
   default-language: Haskell2010
