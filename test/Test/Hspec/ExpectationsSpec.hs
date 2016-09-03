@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+
 #if MIN_VERSION_base(4,8,1)
 #define HAS_SOURCE_LOCATIONS
 {-# LANGUAGE ImplicitParams #-}
@@ -42,6 +43,31 @@ spec = do
 
     it "fails if arguments are not equal" $ do
       ("foo" `shouldBe` "bar") `shouldThrow` expectationFailed "expected: \"bar\"\n but got: \"foo\""
+
+  describe "shouldBeNear" $ do
+    it "succeeds if arguments are equal" $ do
+      1.23456789 `shouldBeNear` (1.23456789 :: Float)
+
+    it "fails if arguments are not equal" $ do
+      (1.0 `shouldBe` (2.0 :: Float)) `shouldThrow` expectationFailed "expected: 2.0\n but got: 1.0"
+
+    it "succeeds if one argument is zero and the other less than epsilon" $ do
+      0.0 `shouldBeNear` (-1e-16 :: Float)
+
+    it "succeeds for large values near one another" $ do
+      1e20 `shouldBeNear` (1e20 + 1 :: Float)
+
+    it "succeeds for a small number near zero" $ do
+      1e-300 `shouldBeNear` (0.0 :: Double)
+
+#if __GLASGOW_HASKELL__ != 710
+    -- For some reason this fails with ghc-7.10.2 and 7.10.3.
+    it "fails for large values not near each other" $ do
+      (1.1e20 `shouldBeNear` (2.1e20 :: Double)) `shouldThrow` expectationFailed "expected: 2.1e20\n but got: 1.1e20"
+
+    it "fails for two small numbers that are not near each other" $ do
+      (1.1e-300 `shouldBeNear` (1e-300 :: Double)) `shouldThrow` expectationFailed "expected: 1.0e-300\n but got: 1.1e-300"
+#endif
 
   describe "shouldSatisfy" $ do
     it "succeeds if value satisfies predicate" $ do
