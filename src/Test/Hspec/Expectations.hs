@@ -92,7 +92,7 @@ actual `shouldBe` expected = expectTrue ("expected: " ++ show expected ++ "\n bu
 with_loc(shouldSatisfy, (Show a) => a -> (a -> Bool) -> Expectation)
 v `shouldSatisfy` p = expectTrue ("predicate failed on: " ++ show v) (p v)
 
-with_loc(compareWith, (Show a, Eq a) => (a -> a -> Bool) -> String -> a -> a -> Expectation)
+with_loc(compareWith, Show a => (a -> a -> Bool) -> String -> a -> a -> Expectation)
 compareWith comparator errorDesc result expected = expectTrue errorMsg (comparator expected result)
   where
     errorMsg = show result ++ " " ++ errorDesc ++ " " ++ show expected
@@ -183,7 +183,11 @@ anyErrorCall :: Selector ErrorCall
 anyErrorCall = const True
 
 errorCall :: String -> Selector ErrorCall
+#if MIN_VERSION_base(4,9,0)
+errorCall s (ErrorCallWithLocation msg _) = s == msg
+#else
 errorCall s (ErrorCall msg) = s == msg
+#endif
 
 anyIOException :: Selector IOException
 anyIOException = const True

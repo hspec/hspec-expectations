@@ -13,7 +13,10 @@ import           Test.Hspec.Expectations
 
 #ifdef HAS_SOURCE_LOCATIONS
 
+#if !(MIN_VERSION_base(4,9,0))
 import           GHC.SrcLoc
+#endif
+
 import           GHC.Stack
 
 expectationFailed :: (?loc :: CallStack) => String -> HUnitFailure -> Bool
@@ -119,11 +122,8 @@ spec = do
     it "fails, if a required specific exception is not thrown" $ do
       (throwIO Overflow `shouldThrow` (== DivideByZero)) `shouldThrow` expectationFailed "predicate failed on expected exception: ArithException (arithmetic overflow)"
 
-    it "fails, if any exception is required, but no exception occurs" $ do
+    it "fails, if any exception is required, but no exception is thrown" $ do
       (return () `shouldThrow` anyException) `shouldThrow` expectationFailed "did not get expected exception: SomeException"
 
-    it "fails, if a required exception of a specific type is not thrown" $ do
+    it "fails, if an exception of a specific type is required, but no exception is thrown" $ do
       (return () `shouldThrow` anyErrorCall) `shouldThrow` expectationFailed "did not get expected exception: ErrorCall"
-
-    it "fails, if a required specific exception is not thrown" $ do
-      (error "foo" `shouldThrow` errorCall "foobar") `shouldThrow` expectationFailed "predicate failed on expected exception: ErrorCall (foo)"

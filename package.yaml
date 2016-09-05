@@ -21,3 +21,12 @@ library:
   exposed-modules:
     - Test.Hspec.Expectations
     - Test.Hspec.Expectations.Contrib
+
+tests:
+  spec:
+    main: Spec.hs
+    source-dirs:
+      - test
+      - src
+    dependencies:
+      - nanospec
