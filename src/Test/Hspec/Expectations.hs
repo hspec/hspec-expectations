@@ -11,6 +11,7 @@ module Test.Hspec.Expectations (
   Expectation
 , expectationFailure
 , shouldBe
+, shouldBeNear
 , shouldSatisfy
 , shouldStartWith
 , shouldEndWith
@@ -78,7 +79,7 @@ expectationFailure = Test.HUnit.assertFailure
 with_loc(expectTrue, String -> Bool -> Expectation)
 expectTrue msg b = unless b (expectationFailure msg)
 
-infix 1 `shouldBe`, `shouldSatisfy`, `shouldStartWith`, `shouldEndWith`, `shouldContain`, `shouldMatchList`, `shouldReturn`, `shouldThrow`
+infix 1 `shouldBe`, `shouldBeNear`, `shouldSatisfy`, `shouldStartWith`, `shouldEndWith`, `shouldContain`, `shouldMatchList`, `shouldReturn`, `shouldThrow`
 infix 1 `shouldNotBe`, `shouldNotSatisfy`, `shouldNotContain`, `shouldNotReturn`
 
 -- |
@@ -86,6 +87,24 @@ infix 1 `shouldNotBe`, `shouldNotSatisfy`, `shouldNotContain`, `shouldNotReturn`
 -- to @expected@.
 with_loc(shouldBe, (Show a, Eq a) => a -> a -> Expectation)
 actual `shouldBe` expected = expectTrue ("expected: " ++ show expected ++ "\n but got: " ++ show actual) (actual == expected)
+
+-- |
+-- @actual \`shouldBeNear\` expected@ sets the expectation that @actual@ be a
+-- floating point value near @expected@. If either value is zero we check that
+-- the absolute difference is less than epsilon (1e-15) otherwise we check if
+-- the relative difference is less than epsilon.
+with_loc(shouldBeNear, (Show a, Ord a, Floating a) => a -> a -> Expectation)
+actual `shouldBeNear` expected
+  -- Short circuit if they are actually equal.
+  | actual == expected = reportFail (actual == expected)
+  | actual == 0 || expected == 0 = reportFail (absoluteDifference < epsilon)
+  | otherwise =  reportFail (relativeDifference < epsilon)
+  where
+    epsilon = 1e-15
+    absoluteDifference = abs (expected - actual)
+    relativeDifference = absoluteDifference / (abs actual + abs expected)
+    reportFail =
+      expectTrue ("expected: " ++ show expected ++ "\n but got: " ++ show actual)
 
 -- |
 -- @v \`shouldSatisfy\` p@ sets the expectation that @p v@ is @True@.
