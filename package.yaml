@@ -15,6 +15,7 @@ ghc-options: -Wall
 dependencies:
   - base == 4.*
   - HUnit
+  - call-stack
 
 library:
   source-dirs: src

@@ -1,4 +1,4 @@
--- This file has been generated from package.yaml by hpack version 0.14.1.
+-- This file has been generated from package.yaml by hpack version 0.15.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -28,6 +28,7 @@ library
   build-depends:
       base == 4.*
     , HUnit
+    , call-stack
   exposed-modules:
       Test.Hspec.Expectations
       Test.Hspec.Expectations.Contrib
@@ -41,11 +42,12 @@ test-suite spec
   main-is: Spec.hs
   hs-source-dirs:
       test
-    , src
+      src
   ghc-options: -Wall
   build-depends:
       base == 4.*
     , HUnit
+    , call-stack
     , nanospec
   other-modules:
       Test.Hspec.Expectations.MatcherSpec

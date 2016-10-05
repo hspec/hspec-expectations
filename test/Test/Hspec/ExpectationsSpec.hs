@@ -1,37 +1,30 @@
 {-# LANGUAGE CPP #-}
-#if MIN_VERSION_base(4,8,1)
-#define HAS_SOURCE_LOCATIONS
-{-# LANGUAGE ImplicitParams #-}
-#endif
+{-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE FlexibleContexts #-}
 module Test.Hspec.ExpectationsSpec (spec) where
 
 import           Control.Exception
 import           Test.HUnit.Lang
 import           Test.Hspec (Spec, describe, it)
 
-import           Test.Hspec.Expectations
+import           Test.Hspec.Expectations hiding (HasCallStack)
+import           Data.CallStack
 
-#ifdef HAS_SOURCE_LOCATIONS
-
-#if !(MIN_VERSION_base(4,9,0))
-import           GHC.SrcLoc
-#endif
-
-import           GHC.Stack
-
-expectationFailed :: (?loc :: CallStack) => String -> HUnitFailure -> Bool
-expectationFailed msg (HUnitFailure l m) = m == msg && (setColumn <$> l) == location
+expectationFailed :: HasCallStack => String -> HUnitFailure -> Bool
+expectationFailed msg (HUnitFailure l m) = m == msg && (fmap setColumn l) == (fmap setColumn location)
   where
-    location :: Maybe Location
-    location = case reverse (getCallStack ?loc) of
-      (_, loc) : _ -> Just $ Location (srcLocFile loc) (srcLocStartLine loc) 0
-      _ -> Nothing
+    location = case reverse callStack of
+      [] -> Nothing
+#if MIN_VERSION_HUnit(1,4,0)
+      (_, loc) : _ -> Just loc
+    location :: Maybe SrcLoc
 
-    setColumn :: Location -> Location
-    setColumn loc_ = loc_{locationColumn = 0}
+    setColumn loc_ = loc_{srcLocStartCol = 0, srcLocEndCol = 0}
 #else
-expectationFailed :: String -> HUnitFailure -> Bool
-expectationFailed msg e = e == HUnitFailure Nothing msg
+      (_, loc) : _ -> Just $ Location (srcLocFile loc) (srcLocStartLine loc) 0
+    location :: Maybe Location
+
+    setColumn loc_ = loc_{locationColumn = 0}
 #endif
 
 spec :: Spec
