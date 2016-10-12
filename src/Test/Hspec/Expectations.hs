@@ -8,7 +8,6 @@ module Test.Hspec.Expectations (
 
 -- * Setting expectations
   Expectation
-, HasCallStack
 , expectationFailure
 , shouldBe
 , shouldSatisfy
@@ -47,6 +46,9 @@ module Test.Hspec.Expectations (
 -- Each combinator corresponds to a constructor; it takes the same arguments,
 -- and has the same name (but starting with a lower-case letter).
 , errorCall
+
+-- * Re-exports
+, HasCallStack
 ) where
 
 import qualified Test.HUnit
