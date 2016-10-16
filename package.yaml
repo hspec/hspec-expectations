@@ -14,11 +14,12 @@ ghc-options: -Wall
 
 dependencies:
   - base == 4.*
-  - HUnit
   - call-stack
 
 library:
   source-dirs: src
+  dependencies:
+    - HUnit
   exposed-modules:
     - Test.Hspec.Expectations
     - Test.Hspec.Expectations.Contrib
@@ -31,3 +32,4 @@ tests:
       - src
     dependencies:
       - nanospec
+      - HUnit >= 1.5.0.0
