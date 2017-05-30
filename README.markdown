@@ -14,7 +14,7 @@ integrates with HUnit, like
 Here is an example that uses Hspec. It's a partial specification of
 itself.
 
-~~~ {.haskell .literate}
+```haskell
 import Test.Hspec
 import Control.Exception
 
@@ -31,7 +31,7 @@ main = hspec $ do
   describe "shouldThrow" $ do
     it "asserts that an exception is thrown" $ do
       evaluate (1 `div` 0 :: Int) `shouldThrow` (== DivideByZero)
-~~~
+```
 
 ## shouldBe
 
@@ -41,9 +41,9 @@ main = hspec $ do
 
 `shouldSatisfy` asserts that some predicate holds for a given value.
 
-~~~ {.haskell}
+```haskell
 "bar" `shouldSatisfy` (not . null)
-~~~
+```
 
 It is similar to HUnit's `assertBool`, but gives a useful error message.
 
@@ -54,54 +54,54 @@ It is similar to HUnit's `assertBool`, but gives a useful error message.
 
 `shouldReturn` asserts that an action returns a given value.
 
-~~~ {.haskell}
+```haskell
 launchMissiles `shouldReturn` Left "permission error"
-~~~
+```
 
 ## shouldThrow
 
 `shouldThrow` asserts that an exception is thrown. The precise nature of
 that exception is described with a `Selector`.
 
-~~~ {.haskell}
+```haskell
 error "foobar" `shouldThrow` anyException
-~~~
+```
 
 A `Selector` is a predicate, it can simultaneously constrain the type
 and value of an exception.
 
-~~~ {.haskell}
+```haskell
 throw DivideByZero `shouldThrow` (== DivideByZero)
-~~~
+```
 
 To select all exceptions of a given type, `const True` can be used.
 
-~~~ {.haskell}
+```haskell
 error "foobar" `shouldThrow` (const True :: Selector ErrorCall)
-~~~
+```
 
 For convenience, predefined selectors for some standard exceptions are
 provided.
 
-~~~ {.haskell}
+```haskell
 error "foobar" `shouldThrow` anyErrorCall
-~~~
+```
 
 Some exceptions (like `ErrorCall`) have no `Eq` instance, so checking
 for a specific value requires pattern matching.
 
-~~~ {.haskell}
+```haskell
 error "foobar" `shouldThrow` (\e -> case e of
     ErrorCall "foobar" -> True
     _ -> False
     )
-~~~
+```
 
 For such exceptions, combinators that construct selectors are provided.
 Each combinator corresponds to a constructor; it takes the same
 arguments, and has the same name (but starting with a lower-case
 letter).
 
-~~~ {.haskell}
+```haskell
 error "foobar" `shouldThrow` errorCall "foobar"
-~~~
+```
