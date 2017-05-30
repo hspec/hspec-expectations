@@ -3,7 +3,7 @@
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE ImplicitParams #-}
 -- |
--- Introductory documentation: <https://github.com/sol/hspec-expectations#readme>
+-- Introductory documentation: <https://github.com/hspec/hspec-expectations#readme>
 module Test.Hspec.Expectations (
 
 -- * Setting expectations

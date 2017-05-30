@@ -14,7 +14,7 @@ integrates with HUnit, like
 Here is an example that uses Hspec. It's a partial specification of
 itself.
 
-```haskell
+```haskell literate
 import Test.Hspec
 import Control.Exception
 
