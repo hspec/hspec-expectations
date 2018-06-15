@@ -112,3 +112,8 @@ spec = do
 
     it "fails, if an exception of a specific type is required, but no exception is thrown" $ do
       (return () `shouldThrow` anyErrorCall) `shouldThrow` expectationFailed (Reason "did not get expected exception: ErrorCall")
+
+  describe "orScream" $ do
+    it "prepends a message" $ do
+      ("foo" `shouldBe` "bar" `orScream` "Oh no!")
+        `shouldThrow` expectationFailed (Reason "Oh no!\n\nexpected: \"bar\"\n but got: \"foo\"")

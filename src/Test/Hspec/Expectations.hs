@@ -25,6 +25,9 @@ module Test.Hspec.Expectations (
 -- * Expecting exceptions
 , shouldThrow
 
+-- * Decorating Expections
+, orScream
+
 -- ** Selecting exceptions
 , Selector
 
@@ -53,6 +56,7 @@ module Test.Hspec.Expectations (
 
 import qualified Test.HUnit
 import           Test.HUnit ((@?=))
+import           Test.HUnit.Lang (FailureReason(..), HUnitFailure(..), formatFailureReason)
 import           Control.Exception
 import           Data.Typeable
 import           Data.List
@@ -178,6 +182,20 @@ action `shouldThrow` p = do
       where
         instanceOf :: Selector a -> a
         instanceOf _ = error "Test.Hspec.Expectations.shouldThrow: broken Typeable instance"
+
+-- |
+-- Preppend a message to an @'HUnitFailure'@
+--
+-- @
+-- myValue `shouldBe` myExpectation `orScream` "Oh GAWD no!"
+-- @
+--
+orScream :: Expectation -> String -> Expectation
+orScream action message =
+  action `catch` \(HUnitFailure l r) ->
+    throwIO . HUnitFailure l . Reason $ message ++ "\n\n" ++ formatFailureReason r
+
+infix 0 `orScream`
 
 anyException :: Selector SomeException
 anyException = const True
