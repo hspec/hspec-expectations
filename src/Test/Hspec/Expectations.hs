@@ -184,7 +184,8 @@ action `shouldThrow` p = do
         instanceOf _ = error "Test.Hspec.Expectations.shouldThrow: broken Typeable instance"
 
 -- |
--- Preppend a message to an @'HUnitFailure'@
+-- Decorate an @'Expectation'@ with a message. The @'String'@ is prepended to
+-- failure messages.
 --
 -- @
 -- myValue `shouldBe` myExpectation `orScream` "Oh GAWD no!"
