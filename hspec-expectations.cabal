@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:             hspec-expectations
-version:          0.8.2
+version:          0.8.3
 synopsis:         Catchy combinators for HUnit
 description:      Catchy combinators for HUnit: <https://github.com/hspec/hspec-expectations#readme>
 bug-reports:      https://github.com/hspec/hspec-expectations/issues
@@ -51,6 +51,8 @@ test-suite spec
     , call-stack
     , nanospec
   other-modules:
+      Helper
+      Test.Hspec.Expectations.ContribSpec
       Test.Hspec.Expectations.MatcherSpec
       Test.Hspec.ExpectationsSpec
       Test.Hspec.Expectations
