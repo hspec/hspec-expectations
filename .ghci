@@ -1,2 +1,1 @@
-:set -isrc -itest -idist/build/autogen -pgmL markdown-unlit -optL haskell+literate
-:set -optP-includedist/build/autogen/cabal_macros.h
+:set -isrc -itest -pgmL markdown-unlit -optL haskell+literate
