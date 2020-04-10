@@ -6,18 +6,8 @@ import           Control.Exception
 import           Test.HUnit.Lang
 import           Test.Hspec (Spec, describe, it)
 
-import           Test.Hspec.Expectations hiding (HasCallStack)
-import           Data.CallStack
-
-expectationFailed :: HasCallStack => FailureReason -> HUnitFailure -> Bool
-expectationFailed msg (HUnitFailure l m) = m == msg && (fmap setColumn l) == (fmap setColumn location)
-  where
-    location = case reverse callStack of
-      [] -> Nothing
-      (_, loc) : _ -> Just loc
-    location :: Maybe SrcLoc
-
-    setColumn loc_ = loc_{srcLocStartCol = 0, srcLocEndCol = 0}
+import           Test.Hspec.Expectations
+import           Helper
 
 spec :: Spec
 spec = do
