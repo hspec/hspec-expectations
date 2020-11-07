@@ -29,7 +29,9 @@ before_install:
  - ghc --version
  - cabal --version
  - travis_retry cabal update
- - cabal install --enable-tests --only-dep
+ - cabal install --only-dep
 
 script:
-  - cabal configure --enable-tests --ghc-options=-Werror && cabal build && cabal test
+  - cabal configure --enable-tests --ghc-options=-Werror
+  - cabal build
+  - cabal test
