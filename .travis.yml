@@ -30,7 +30,7 @@ before_install:
  - ghc --version
  - cabal --version
  - travis_retry cabal update
- - if $OLD_CABAL; then cabal install --enable-tests --only-dep; else; echo "Skipping for new Cabal $CABALVER"; fi;
+ - if $OLD_CABAL; then cabal install --enable-tests --only-dep; else echo "Skipping for new Cabal $CABALVER"; fi;
 
 script:
   - if $OLD_CABAL; then cabal configure --enable-tests --ghc-options=-Werror && cabal build && cabal test; else cabal v2-test; fi;
