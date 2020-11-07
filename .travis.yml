@@ -5,6 +5,8 @@ env:
   - CABALVER=1.18 GHCVER=7.8.4
   - CABALVER=1.22 GHCVER=7.10.2
   - CABALVER=1.24 GHCVER=8.0.1
+  - CABALVER=3.2 GHCVER=8.2.2
+  - CABALVER=3.2 GHCVER=8.10.1
 
 addons:
   apt:
@@ -15,9 +17,12 @@ addons:
       - ghc-7.8.4
       - ghc-7.10.2
       - ghc-8.0.1
+      - ghc-8.2.2
+      - ghc-8.10.1
       - cabal-install-1.18
       - cabal-install-1.22
       - cabal-install-1.24
+      - cabal-install-3.2
 
 before_install:
  - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
