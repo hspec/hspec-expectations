@@ -26,12 +26,11 @@ addons:
 
 before_install:
  - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
+ - export OLD_CABAL=false; [[ $CABALVER == "1."* ]] && export OLD_CABAL=true
  - ghc --version
  - cabal --version
  - travis_retry cabal update
- - cabal install --only-dep
+ - if $OLD_CABAL; then cabal install --enable-tests --only-dep; else; echo "Skipping for new Cabal $CABALVER"; fi;
 
 script:
-  - cabal configure --enable-tests --ghc-options=-Werror
-  - cabal build
-  - cabal test
+  - if $OLD_CABAL; then cabal configure --enable-tests --ghc-options=-Werror && cabal build && cabal test; else cabal v2-test; fi;
