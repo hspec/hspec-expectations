@@ -17,10 +17,10 @@ xs `matchList` ys
     err :: ShowS
     err =
         showString "Actual list is not a permutation of expected list!\n"
-      . msgAndList "  expected list contains:   " ys
-      . msgAndList "  actual list contains:     " xs
-      . optMsgList "  the missing elements are: " missing
-      . optMsgList "  the extra elements are:   " extra
+      . msgAndList "  expected elements: " ys
+      . msgAndList "  actual elements:   " xs
+      . optMsgList "  missing elements:  " missing
+      . optMsgList "  extra elements:    " extra
 
 showList :: Show a => [a] -> ShowS
 showList xs = showChar '[' . foldr (.) (showChar ']') (intersperse (showString ", ") $ map shows xs)

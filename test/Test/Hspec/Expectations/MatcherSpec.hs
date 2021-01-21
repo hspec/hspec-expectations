@@ -20,15 +20,15 @@ spec = do
       it "shows extra elements" $ do
         [1, 2, 2, 3] `matchList` [1, 2, 3 :: Int] `shouldBe` (Just . unlines) [
             "Actual list is not a permutation of expected list!"
-          , "  expected list contains:   [1, 2, 3]"
-          , "  actual list contains:     [1, 2, 2, 3]"
-          , "  the extra elements are:   [2]"
+          , "  expected elements: [1, 2, 3]"
+          , "  actual elements:   [1, 2, 2, 3]"
+          , "  extra elements:    [2]"
           ]
 
       it "shows missing elements" $ do
         [1, 2, 3] `matchList` [1, 2, 2, 3 :: Int] `shouldBe` (Just . unlines) [
             "Actual list is not a permutation of expected list!"
-          , "  expected list contains:   [1, 2, 2, 3]"
-          , "  actual list contains:     [1, 2, 3]"
-          , "  the missing elements are: [2]"
+          , "  expected elements: [1, 2, 2, 3]"
+          , "  actual elements:   [1, 2, 3]"
+          , "  missing elements:  [2]"
           ]
