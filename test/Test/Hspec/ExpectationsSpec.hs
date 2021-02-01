@@ -4,7 +4,7 @@ module Test.Hspec.ExpectationsSpec (spec) where
 
 import           Control.Exception
 import           Test.HUnit.Lang
-import           Test.Hspec (Spec, describe, it)
+import           Test.Hspec.Meta (Spec, describe, it)
 
 import           Test.Hspec.Expectations hiding (HasCallStack)
 import           Data.CallStack

@@ -1,7 +1,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 module Test.Hspec.Expectations.FloatingSpec (spec) where
 
-import           Test.Hspec
+import           Test.Hspec.Meta
 import           Test.QuickCheck
 
 import           Control.Exception
