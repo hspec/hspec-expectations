@@ -47,9 +47,11 @@ test-suite spec
   build-depends:
       base == 4.*
     , call-stack
+    , containers
     , nanospec
     , HUnit >= 1.5.0.0
   other-modules:
+      Test.Hspec.Expectations.ContribSpec
       Test.Hspec.Expectations.MatcherSpec
       Test.Hspec.ExpectationsSpec
       Test.Hspec.Expectations
