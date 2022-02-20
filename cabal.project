@@ -1,5 +1,0 @@
-packages:
-  hspec-expectations.cabal
-
-package hspec-expectations
-  ghc-options: -Werror
