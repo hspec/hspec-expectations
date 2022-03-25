@@ -16,8 +16,11 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-latest # https://launchpad.net/~hvr/+archive/ubuntu/ghc?field.series_filter=xenial
+          - ubuntu-18.04 # latest # https://launchpad.net/~hvr/+archive/ubuntu/ghc?field.series_filter=xenial
         ghc:
+          - '7.4.2'
+          - '7.6.3'
+          - '7.8.4'
           - '7.10'
           - '8.0'
           - '8.2'
