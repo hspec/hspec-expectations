@@ -36,6 +36,8 @@ jobs:
           - os: windows-latest
             ghc: latest
     steps:
+      - name: Install libnuma (avoid a problem with ghc 8.4 somehow)
+        run: sudo apt-get install -y libnuma-dev
       - uses: actions/checkout@v2
       - uses: haskell/actions/setup@v1
         with:
