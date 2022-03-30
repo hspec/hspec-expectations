@@ -8,6 +8,10 @@ author: Simon Hengel <sol@typeful.net>
 maintainer: Simon Hengel <sol@typeful.net>
 category: Testing
 
+extra-source-files:
+- README.markdown
+- CHANGELOG.markdown
+
 github: hspec/hspec-expectations
 
 ghc-options: -Wall
