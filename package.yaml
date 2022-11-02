@@ -31,5 +31,7 @@ tests:
       - test
       - src
     dependencies:
-      - nanospec
-      - HUnit >= 1.5.0.0
+      - HUnit
+      - hspec-meta
+      - QuickCheck
+      - floating-bits

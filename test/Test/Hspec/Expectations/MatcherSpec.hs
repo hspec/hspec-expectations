@@ -1,6 +1,6 @@
 module Test.Hspec.Expectations.MatcherSpec (main, spec) where
 
-import           Test.Hspec
+import           Test.Hspec.Meta
 
 import           Test.Hspec.Expectations.Matcher
 
