@@ -3,7 +3,7 @@ version: 0.8.3
 synopsis: Catchy combinators for HUnit
 description: "Catchy combinators for HUnit: <https://github.com/hspec/hspec-expectations#readme>"
 license: MIT
-copyright: (c) 2011-2015 Simon Hengel
+copyright: (c) 2011-2023 Simon Hengel
 author: Simon Hengel <sol@typeful.net>
 maintainer: Simon Hengel <sol@typeful.net>
 category: Testing
