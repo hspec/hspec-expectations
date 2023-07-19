@@ -27,7 +27,7 @@ library
       src
   ghc-options: -Wall
   build-depends:
-      HUnit
+      HUnit >=1.5.0.0
     , base ==4.*
     , call-stack
   exposed-modules:
@@ -47,7 +47,7 @@ test-suite spec
   ghc-options: -Wall
   build-depends:
       HUnit >=1.5.0.0
-    , base ==4.*
+    , base >=4.8
     , call-stack
     , nanospec
   other-modules:
