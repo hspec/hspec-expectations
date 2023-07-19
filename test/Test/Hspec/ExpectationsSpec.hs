@@ -96,7 +96,7 @@ spec = do
       error "foobar" `shouldThrow` errorCall "foobar"
 
     it "fails, if a required specific exception is not thrown" $ do
-      (throwIO Overflow `shouldThrow` (== DivideByZero)) `shouldThrow` expectationFailed (Reason "predicate failed on expected exception: ArithException (arithmetic overflow)")
+      (throwIO Overflow `shouldThrow` (== DivideByZero)) `shouldThrow` expectationFailed (Reason "predicate failed on expected exception: ArithException\narithmetic overflow")
 
     it "fails, if any exception is required, but no exception is thrown" $ do
       (return () `shouldThrow` anyException) `shouldThrow` expectationFailed (Reason "did not get expected exception: SomeException")
