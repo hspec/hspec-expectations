@@ -3,3 +3,5 @@ packages:
 
 package hspec-expectations
   ghc-options: -Werror
+
+tests: True

@@ -171,9 +171,9 @@ action `shouldThrow` p = do
         "did not get expected exception: " ++ exceptionType
     Left e ->
       (`expectTrue` p e) $
-        "predicate failed on expected exception: " ++ exceptionType ++ " (" ++ show e ++ ")"
+        "predicate failed on expected exception: " ++ exceptionType ++ "\n" ++ show e
   where
-    -- a string repsentation of the expected exception's type
+    -- a string representation of the expected exception's type
     exceptionType = (show . typeOf . instanceOf) p
       where
         instanceOf :: Selector a -> a
