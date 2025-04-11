@@ -75,7 +75,7 @@ type HasCallStack = (() :: Constraint)
 
 type Expectation = Test.HUnit.Assertion
 
-expectationFailure :: HasCallStack => String -> Expectation
+expectationFailure :: HasCallStack => String -> IO a
 expectationFailure = Test.HUnit.assertFailure
 
 expectTrue :: HasCallStack => String -> Bool -> Expectation
